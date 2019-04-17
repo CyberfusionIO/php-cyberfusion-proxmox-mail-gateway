@@ -17,6 +17,15 @@ class SMTPServer extends Model
      */
     private $gateway;
     
+    /**
+     * SMTPServer constructor.
+     *
+     * @param string $hostname
+     * @param string $username
+     * @param string $password
+     *
+     * @throws \YWatchman\ProxmoxMGW\Exceptions\AuthenticationException
+     */
     public function __construct(string $hostname, string $username, string $password)
     {
         parent::__construct();
