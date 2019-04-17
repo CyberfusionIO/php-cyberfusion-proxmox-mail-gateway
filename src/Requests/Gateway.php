@@ -11,20 +11,74 @@ namespace YWatchman\ProxmoxMGW\Requests;
 
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Cookie\CookieJar;
+use YWatchman\ProxmoxMGW\Exceptions\AuthenticationException;
 
 class Gateway
 {
     
+    /**
+     * PMG hostname
+     * @var string $hostname
+     */
     public $hostname;
-    private $username, $password, $access, $realm;
     
-    private $ticket = null, $csrf = null;
+    /**
+     * PMG username
+     * @var string $username
+     */
+    private $username;
     
+    /**
+     * PMG Password
+     * @var string $password
+     */
+    private $password;
+    
+    /**
+     * Access request object for retrieving tokens etc.
+     * @var \YWatchman\ProxmoxMGW\Requests\Access $access
+     */
+    private $access;
+    
+    /**
+     * Authentication realm
+     * @var string $realm
+     */
+    private $realm;
+    
+    /**
+     * Login cookie from PMG
+     * @var string $ticket
+     */
+    private $ticket = "";
+    
+    /**
+     * Protection token retrieved from API
+     * @var string $csrf
+     */
+    private $csrf = "";
+    
+    /**
+     * Can be json or extjs
+     * @var string $responseType
+     */
     private $responseType = 'json';
+    
+    /**
+     * @var \YWatchman\ProxmoxMGW\Requests\Gateway $client
+     */
+    private $client;
+    
+    /**
+     * @var \GuzzleHttp\Client $httpClient
+     */
+    private $httpClient;
     
     public function __construct(string $hostname, string $username, string $password, string $realm = 'pam')
     {
+        if(empty($username) || empty($password)) {
+            throw new AuthenticationException('Missing username or password', 401);
+        }
         $this->hostname = $hostname;
         $this->username = $username;
         $this->password = $password;
@@ -35,7 +89,10 @@ class Gateway
     }
     
     /**
-     * @return null
+     * Get ticket
+     *
+     * @author Yvan Watchman
+     * @return string
      */
     public function getTicket()
     {
@@ -43,7 +100,11 @@ class Gateway
     }
     
     /**
-     * @param null $ticket
+     * Set ticket
+     *
+     * @author Yvan Watchman
+     *
+     * @param string $ticket
      */
     public function setTicket($ticket): void
     {
@@ -51,7 +112,10 @@ class Gateway
     }
     
     /**
-     * @return null
+     * @author Yvan Watchman
+     * @return string
+     *
+     *
      */
     public function getCsrf()
     {
@@ -59,44 +123,77 @@ class Gateway
     }
     
     /**
-     * @param null $csrf
+     * @author Yvan Watchman
+     *
+     * @param string $csrf
      */
     public function setCsrf($csrf): void
     {
         $this->csrf = $csrf;
     }
     
-    function getUsername() {
+    /**
+     * @author Yvan Watchman
+     * @return string
+     */
+    function getUsername()
+    {
         return $this->username;
     }
     
-    function getPassword() {
+    /**
+     * @author Yvan Watchman
+     * @return string
+     */
+    function getPassword()
+    {
         return $this->password;
     }
     
-    function getRealm() {
+    /**
+     * @author Yvan Watchman
+     * @return string
+     */
+    function getRealm()
+    {
         return $this->realm;
     }
     
+    /**
+     * @author Yvan Watchman
+     * @return \YWatchman\ProxmoxMGW\Requests\Access
+     */
     public function getAccess()
     {
+        // Set access and return it.
         return $this->access ?: ($this->access = new Access($this->client));
     }
     
-    public function getApiUrl()
-    {
-        return "https://{$this->hostname}:8006/api2/{$this->responseType}";
-    }
-    
+    /**
+     * @author Yvan Watchman
+     *
+     * @param        $res
+     * @param string $method
+     * @param array  $params
+     *
+     * @return \GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface|null
+     *
+     *
+     */
     public function makeRequest($res, $method = 'GET', $params = [])
     {
+        // Get API url and append endpoint
         $url = $this->getApiUrl() . $res;
+        
+        // Initialise variables for later use
         $cookies = $headers = null;
         
-        if ($this->ticket !== null) {
+        if ( $this->ticket !== null ) {
+            
             $cookies = [
-                'PMGAuthCookie' => $this->ticket
+                'PMGAuthCookie' => $this->ticket // Authentication cookie for PMG
             ];
+            
             $headers = ['CSRFPreventionToken' => $this->csrf];
         }
         
@@ -104,7 +201,7 @@ class Gateway
             return $value !== null;
         });
         
-        switch($method) {
+        switch ($method) {
             case 'GET':
                 return $this->httpClient->get($url, [
                     'verify' => false,
@@ -138,6 +235,16 @@ class Gateway
                     'body' => $params
                 ]);
         }
+    }
+    
+    /**
+     * @author Yvan Watchman
+     * @return string
+     */
+    public function getApiUrl()
+    {
+        // All of our instances run on the default port, so no port variable required.
+        return "https://{$this->hostname}:8006/api2/{$this->responseType}";
     }
     
 }

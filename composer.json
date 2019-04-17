@@ -5,7 +5,7 @@
     "require": {
         "php": ">=7.1",
         "lib-curl": "*",
-        "guzzlehttp/guzzle": "~4.0"
+        "guzzlehttp/guzzle": "~5.3"
     },
     "license": "private",
     "authors": [
