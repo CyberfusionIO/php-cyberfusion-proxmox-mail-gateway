@@ -1,0 +1,18 @@
+{
+    "name": "ywatchman/proxmox-mgw",
+    "description": "Proxmox mail gateway laravel library",
+    "type": "library",
+    "require": {
+        "php": ">=7.1",
+        "lib-curl": "*",
+        "guzzlehttp/guzzle": "~4.0"
+    },
+    "license": "private",
+    "authors": [
+        {
+            "name": "Yvan Watchman",
+            "email": "ywatchman@cyberfusion.nl"
+        }
+    ],
+    "minimum-stability": "dev"
+}
