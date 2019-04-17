@@ -29,9 +29,9 @@ class Config
     
     public function delNetwork($cidr)
     {
-        if( !validateCidr($cidr) ) return false;
+        if ( !validateCidr($cidr) ) return false;
         
-        try{
+        try {
             $this->client->makeRequest('/config/mynetworks/' . $cidr, 'DELETE');
         } catch (Exception $e) {
             return false;
@@ -39,4 +39,18 @@ class Config
         return true;
     }
     
+    public function addNetwork($cidr, $comment)
+    {
+        if ( !validateCidr($cidr) ) return false;
+        
+        try {
+            $this->client->makeRequest('/config/myneyworks', 'POST', [
+                'cidr' => $cidr,
+                'comment' => $comment ?? 'Not set'
+            ]);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }

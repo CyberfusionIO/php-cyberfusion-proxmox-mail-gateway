@@ -60,11 +60,32 @@ class SMTPServer extends Model
     }
     
     /**
+     * Add network to trusted networks
+     *
+     * @author Yvan Watchman
+     *
+     * @param $cidr
+     * @param $comment
+     *
+     * @return bool
+     */
+    public function addSMTPServer($cidr, $comment)
+    {
+        $this->getTicket();
+        $config = new Config($this->gateway);
+        if ( $config->addNetwork($cidr, $comment) ) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
      * Delete network from trusted networks
      *
      * @author Yvan Watchman
      *
      * @param $cidr
+     *
      * @return bool
      */
     public function deleteSMTPServer($cidr)

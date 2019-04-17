@@ -76,7 +76,7 @@ class Gateway
     
     public function __construct(string $hostname, string $username, string $password, string $realm = 'pam')
     {
-        if(empty($username) || empty($password)) {
+        if ( empty($username) || empty($password) ) {
             // Throw exception if username or password is empty
             throw new AuthenticationException('Missing username or password', 401);
         }
@@ -86,7 +86,11 @@ class Gateway
         $this->realm = $realm;
         
         $this->client = $this;
-        $this->httpClient = new Client();
+        $this->httpClient = new Client([
+            'defaults' => [
+                'User-Agent' => 'Cyberfusion-PMG-PHP-v1.0'
+            ]
+        ]);
     }
     
     /**
@@ -181,7 +185,7 @@ class Gateway
      *
      *
      */
-    public function makeRequest($res, $method = 'GET', $params = [])
+    public function makeRequest(string $res, string $method = 'GET', array $params = [])
     {
         // Get API url and append endpoint
         $url = $this->getApiUrl() . $res;
