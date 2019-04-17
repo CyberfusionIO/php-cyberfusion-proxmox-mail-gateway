@@ -29,9 +29,8 @@ class Config
     
     public function delNetwork($cidr)
     {
-        if( !validateCidr($cidr) ) {
-            return false;
-        }
+        if( !validateCidr($cidr) ) return false;
+        
         try{
             $this->client->makeRequest('/config/mynetworks/' . $cidr, 'DELETE');
         } catch (Exception $e) {
