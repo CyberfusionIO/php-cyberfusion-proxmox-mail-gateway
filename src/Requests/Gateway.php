@@ -77,6 +77,7 @@ class Gateway
     public function __construct(string $hostname, string $username, string $password, string $realm = 'pam')
     {
         if(empty($username) || empty($password)) {
+            // Throw exception if username or password is empty
             throw new AuthenticationException('Missing username or password', 401);
         }
         $this->hostname = $hostname;

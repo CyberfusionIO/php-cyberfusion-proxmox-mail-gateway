@@ -4,48 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34c95d4f304ac067adae4f090e7de38a",
+    "content-hash": "6f586677c9d6bd75bcbd7aecfe19a5e7",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
-            "version": "4.x-dev",
+            "version": "5.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "68bf75e8dabcebd21e0333719e8f15228ed59d1e"
+                "reference": "40bdb7fff25c0a1bd37c0f9d11ff94f350aeb746"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/68bf75e8dabcebd21e0333719e8f15228ed59d1e",
-                "reference": "68bf75e8dabcebd21e0333719e8f15228ed59d1e",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/40bdb7fff25c0a1bd37c0f9d11ff94f350aeb746",
+                "reference": "40bdb7fff25c0a1bd37c0f9d11ff94f350aeb746",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
-                "guzzlehttp/streams": "~2.1",
-                "php": ">=5.4.0"
+                "guzzlehttp/ringphp": "^1.1",
+                "php": ">=5.4.0",
+                "react/promise": "^2.2"
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "~4.0",
-                "psr/log": "~1.0"
-            },
-            "suggest": {
-                "ext-curl": "Guzzle will use specific adapters if cURL is present"
+                "phpunit/phpunit": "^4.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -69,41 +57,44 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-02-23T20:35:09+00:00"
+            "time": "2019-04-15T05:46:56+00:00"
         },
         {
-            "name": "guzzlehttp/streams",
-            "version": "2.1.0",
+            "name": "guzzlehttp/ringphp",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/streams.git",
-                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534"
+                "url": "https://github.com/guzzle/RingPHP.git",
+                "reference": "5e2a174052995663dd68e6b5ad838afd47dd615b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/streams/zipball/f91b721d73f0e561410903b3b3c90a5d0e40b534",
-                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534",
+                "url": "https://api.github.com/repos/guzzle/RingPHP/zipball/5e2a174052995663dd68e6b5ad838afd47dd615b",
+                "reference": "5e2a174052995663dd68e6b5ad838afd47dd615b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "guzzlehttp/streams": "~3.0",
+                "php": ">=5.4.0",
+                "react/promise": "~2.0"
             },
             "require-dev": {
+                "ext-curl": "*",
                 "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "ext-curl": "Guzzle will use specific adapters if cURL is present"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "GuzzleHttp\\Stream\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
+                    "GuzzleHttp\\Ring\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -116,13 +107,104 @@
                     "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "description": "Provides a simple abstraction over streams of data (Guzzle 4+)",
+            "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function.",
+            "time": "2018-07-31T13:22:33+00:00"
+        },
+        {
+            "name": "guzzlehttp/streams",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/streams.git",
+                "reference": "d99a261c616210618ab94fd319cb17eda458cc3e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/streams/zipball/d99a261c616210618ab94fd319cb17eda458cc3e",
+                "reference": "d99a261c616210618ab94fd319cb17eda458cc3e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Stream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Provides a simple abstraction over streams of data",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
                 "Guzzle",
                 "stream"
             ],
-            "time": "2014-08-17T21:15:53+00:00"
+            "time": "2016-04-13T16:32:01+00:00"
+        },
+        {
+            "name": "react/promise",
+            "version": "2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/promise.git",
+                "reference": "43896aa097d0233da13f81ca9df4efef5177cc82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/43896aa097d0233da13f81ca9df4efef5177cc82",
+                "reference": "43896aa097d0233da13f81ca9df4efef5177cc82",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Promise\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com"
+                }
+            ],
+            "description": "A lightweight implementation of CommonJS Promises/A for PHP",
+            "keywords": [
+                "promise",
+                "promises"
+            ],
+            "time": "2019-01-08T16:10:34+00:00"
         }
     ],
     "packages-dev": [],
