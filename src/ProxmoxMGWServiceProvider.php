@@ -23,6 +23,8 @@ class ProxmoxMGWServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Register helpers
+        include __DIR__ . '/helpers.php';
         // Register routes
         include __DIR__ . '/routes.php';
     }

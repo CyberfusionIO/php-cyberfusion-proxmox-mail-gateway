@@ -10,7 +10,7 @@
 if( !function_exists('validateCidr') ) {
     function validateCidr($cidr) {
         $split = explode('/', $cidr);
-        if(sizeof($cidr) != 2) {
+        if(sizeof($split) != 2) {
             return false;
         }
         
