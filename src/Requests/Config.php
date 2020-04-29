@@ -1,36 +1,34 @@
 <?php
-/**
- * Created with PhpStorm.
- * Project: Management
- * Developer: Yvan Watchman from Cyberfusion
- * Date: 2019-04-17
- * Time: 11:40
- */
 
 namespace YWatchman\ProxmoxMGW\Requests;
 
-
 use Exception;
+use Support\InetAddr;
 
 class Config
 {
-    private $client;
-    
-    public function __construct(Gateway $client)
+    /** @var Gateway  */
+    protected $client;
+
+    /** @var string  */
+    protected $cidr;
+
+    public function __construct(Gateway $client, string $cidr)
     {
         $this->client = $client;
+        $this->cidr = $cidr;
     }
-    
+
     public function getNetworks()
     {
-        $networks = $this->client->makeRequest('/config/mynetworks');
-        return $networks;
+        return $this->client->makeRequest('/config/mynetworks');
     }
-    
+
     public function delNetwork($cidr)
     {
-        if ( !validateCidr($cidr) ) return false;
-        
+        $validator = new InetAddr($cidr);
+        $validator->validateCidr();
+
         try {
             $this->client->makeRequest('/config/mynetworks/' . $cidr, 'DELETE');
         } catch (Exception $e) {
@@ -38,15 +36,16 @@ class Config
         }
         return true;
     }
-    
-    public function addNetwork($cidr, $comment)
+
+    public function addNetwork($cidr, $comment = 'Not set')
     {
-        if ( !validateCidr($cidr) ) return false;
-        
+        $validator = new InetAddr($cidr);
+        $validator->validateCidr();
+
         try {
-            $this->client->makeRequest('/config/myneyworks', 'POST', [
+            $this->client->makeRequest('/config/mynetworks', 'POST', [
                 'cidr' => $cidr,
-                'comment' => $comment ?? 'Not set'
+                'comment' => $comment,
             ]);
             return true;
         } catch (Exception $e) {

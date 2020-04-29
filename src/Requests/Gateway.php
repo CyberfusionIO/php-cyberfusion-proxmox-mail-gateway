@@ -1,113 +1,128 @@
 <?php
-/**
- * Created with PhpStorm.
- * Project: Management
- * Developer: Yvan Watchman from Cyberfusion
- * Date: 2019-04-17
- * Time: 10:16
- */
 
 namespace YWatchman\ProxmoxMGW\Requests;
 
-
 use GuzzleHttp\Client;
 use YWatchman\ProxmoxMGW\Exceptions\AuthenticationException;
+use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
 
 class Gateway
 {
-    
+
     /**
      * PMG hostname
      * @var string $hostname
      */
-    public $hostname;
-    
+    protected $hostname;
+
+    /**
+     * PMG Port
+     * @var int $port
+     */
+    protected $port;
+
     /**
      * PMG username
      * @var string $username
      */
-    private $username;
-    
+    protected $username;
+
     /**
      * PMG Password
      * @var string $password
      */
-    private $password;
-    
+    protected $password;
+
     /**
      * Access request object for retrieving tokens etc.
      * @var \YWatchman\ProxmoxMGW\Requests\Access $access
      */
-    private $access;
-    
+    protected $access;
+
     /**
      * Authentication realm
      * @var string $realm
      */
-    private $realm;
-    
+    protected $realm;
+
     /**
      * Login cookie from PMG
      * @var string $ticket
      */
-    private $ticket = "";
-    
+    protected $ticket = '';
+
     /**
      * Protection token retrieved from API
      * @var string $csrf
      */
-    private $csrf = "";
-    
+    protected $csrf = '';
+
     /**
      * Can be json or extjs
      * @var string $responseType
      */
-    private $responseType = 'json';
-    
+    protected $responseType = 'json';
+
     /**
      * @var \YWatchman\ProxmoxMGW\Requests\Gateway $client
      */
-    private $client;
-    
+    protected $client;
+
     /**
      * @var \GuzzleHttp\Client $httpClient
      */
-    private $httpClient;
-    
-    public function __construct(string $hostname, string $username, string $password, string $realm = 'pam')
-    {
-        if ( empty($username) || empty($password) ) {
+    protected $httpClient;
+
+    /**
+     * Gateway constructor.
+     * @param string $hostname
+     * @param string $username
+     * @param string $password
+     * @param string $realm
+     * @param int $port
+     * @param string $userAgent
+     * @throws AuthenticationException
+     */
+    public function __construct(
+        string $hostname,
+        string $username,
+        string $password,
+        string $realm = 'pam',
+        int $port = 8006,
+        string $userAgent = 'Cyberfusion-PMG-PHP/1.0'
+    ) {
+        if (empty($username) || empty($password)) {
             // Throw exception if username or password is empty
-            throw new AuthenticationException('Missing username or password', 401);
+            throw new AuthenticationException(
+                'Missing username or password',
+                AuthenticationException::AUTH_MISSING_CREDENTIALS);
         }
         $this->hostname = $hostname;
         $this->username = $username;
         $this->password = $password;
         $this->realm = $realm;
-        
+        $this->port = $port;
+
         $this->client = $this;
         $this->httpClient = new Client([
             'defaults' => [
-                'User-Agent' => 'Cyberfusion-PMG-PHP-v1.0'
+                'User-Agent' => $userAgent
             ]
         ]);
     }
-    
+
     /**
      * Get ticket
      *
-     * @author Yvan Watchman
      * @return string
      */
     public function getTicket()
     {
         return $this->ticket;
     }
-    
+
     /**
      * Set ticket
-     *
-     * @author Yvan Watchman
      *
      * @param string $ticket
      */
@@ -115,9 +130,8 @@ class Gateway
     {
         $this->ticket = $ticket;
     }
-    
+
     /**
-     * @author Yvan Watchman
      * @return string
      *
      *
@@ -126,9 +140,8 @@ class Gateway
     {
         return $this->csrf;
     }
-    
+
     /**
-     * @author Yvan Watchman
      *
      * @param string $csrf
      */
@@ -136,36 +149,32 @@ class Gateway
     {
         $this->csrf = $csrf;
     }
-    
+
     /**
-     * @author Yvan Watchman
      * @return string
      */
-    function getUsername()
+    public function getUsername()
     {
         return $this->username;
     }
-    
+
     /**
-     * @author Yvan Watchman
      * @return string
      */
-    function getPassword()
+    public function getPassword()
     {
         return $this->password;
     }
-    
+
     /**
-     * @author Yvan Watchman
      * @return string
      */
-    function getRealm()
+    public function getRealm()
     {
         return $this->realm;
     }
-    
+
     /**
-     * @author Yvan Watchman
      * @return \YWatchman\ProxmoxMGW\Requests\Access
      */
     public function getAccess()
@@ -173,83 +182,74 @@ class Gateway
         // Set access and return it.
         return $this->access ?: ($this->access = new Access($this->client));
     }
-    
+
     /**
-     * @author Yvan Watchman
-     *
-     * @param        $res
+     * @param string $endpoint
      * @param string $method
-     * @param array  $params
+     * @param array $params
      *
      * @return \GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface|null
      *
      *
+     * @throws InvalidRequestException
      */
-    public function makeRequest(string $res, string $method = 'GET', array $params = [])
+    public function makeRequest(string $endpoint, string $method = 'GET', array $params = [])
     {
         // Get API url and append endpoint
-        $url = $this->getApiUrl() . $res;
-        
+        $url = $this->getRequestUrl($endpoint);
+
         // Initialise variables for later use
         $cookies = $headers = null;
-        
-        if ( $this->ticket !== null ) {
-            
+
+        if ($this->ticket !== null) {
             $cookies = [
                 'PMGAuthCookie' => $this->ticket // Authentication cookie for PMG
             ];
-            
+
             $headers = ['CSRFPreventionToken' => $this->csrf];
         }
-        
+
         $params = array_filter($params, function ($value) {
             return $value !== null;
         });
-        
+
+        $options = [
+            'verify' => false, // Todo: check debug
+            'exceptions' => false,
+            'cookies' => $cookies,
+            'headers' => $headers,
+            'query' => $params
+        ];
+
         switch ($method) {
             case 'GET':
-                return $this->httpClient->get($url, [
-                    'verify' => false,
-                    'exceptions' => false,
-                    'cookies' => $cookies,
-                    'headers' => $headers,
-                    'query' => $params
-                ]);
+                return $this->httpClient->get($url, $options);
             case 'POST':
-                return $this->httpClient->post($url, [
-                    'verify' => false,
-                    'exceptions' => false,
-                    'cookies' => $cookies,
-                    'headers' => $headers,
-                    'body' => $params,
-                ]);
+                return $this->httpClient->post($url, $options);
             case 'PUT':
-                return $this->httpClient->put($url, [
-                    'verify' => false,
-                    'exceptions' => false,
-                    'cookies' => $cookies,
-                    'headers' => $headers,
-                    'body' => $params
-                ]);
+                return $this->httpClient->put($url, $options);
             case 'DELETE':
-                return $this->httpClient->delete($url, [
-                    'verify' => false,
-                    'exceptions' => false,
-                    'cookies' => $cookies,
-                    'headers' => $headers,
-                    'body' => $params
-                ]);
+                return $this->httpClient->delete($url, $options);
         }
+
+        throw new InvalidRequestException(
+            'Request method is not implemented (yet).',
+            InvalidRequestException::GATEWAY_METHOD_NOT_IMPLEMENTED
+        );
     }
-    
+
     /**
-     * @author Yvan Watchman
+     * @param $endpoint
      * @return string
      */
-    public function getApiUrl()
+    protected function getRequestUrl($endpoint)
     {
-        // All of our instances run on the default port, so no port variable required.
-        return "https://{$this->hostname}:8006/api2/{$this->responseType}";
+        return sprintf(
+            'https://%s:%d/api2/%s/%s',
+            $this->hostname,
+            $this->port,
+            $this->responseType,
+            $endpoint
+        );
     }
-    
 }
