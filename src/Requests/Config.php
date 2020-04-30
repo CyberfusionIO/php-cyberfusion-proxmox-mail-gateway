@@ -3,6 +3,7 @@
 namespace YWatchman\ProxmoxMGW\Requests;
 
 use Exception;
+use YWatchman\ProxmoxMGW\Client;
 use YWatchman\ProxmoxMGW\Support\InetAddr;
 
 class Config
