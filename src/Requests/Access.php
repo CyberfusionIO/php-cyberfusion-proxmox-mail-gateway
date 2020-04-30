@@ -8,7 +8,7 @@ class Access
 {
     protected $client;
 
-    public function __construct(Gateway $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }

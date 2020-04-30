@@ -2,11 +2,11 @@
 
 namespace YWatchman\ProxmoxMGW\Requests;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as HttpClient;
 use YWatchman\ProxmoxMGW\Exceptions\AuthenticationException;
 use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
 
-class Gateway
+class Client
 {
 
     /**
@@ -64,7 +64,7 @@ class Gateway
     protected $responseType = 'json';
 
     /**
-     * @var \YWatchman\ProxmoxMGW\Requests\Gateway $client
+     * @var \YWatchman\ProxmoxMGW\Requests\Client $client
      */
     protected $client;
 
@@ -104,7 +104,7 @@ class Gateway
         $this->port = $port;
 
         $this->client = $this;
-        $this->httpClient = new Client([
+        $this->httpClient = new HttpClient([
             'defaults' => [
                 'User-Agent' => $userAgent
             ]
@@ -112,17 +112,17 @@ class Gateway
     }
 
     /**
-     * Get ticket
+     * Get ticket.
      *
      * @return string
      */
-    public function getTicket()
+    public function getTicket(): string
     {
         return $this->ticket;
     }
 
     /**
-     * Set ticket
+     * Set ticket.
      *
      * @param string $ticket
      */
@@ -132,18 +132,19 @@ class Gateway
     }
 
     /**
+     * Get CSRF token.
+     *
      * @return string
-     *
-     *
      */
-    public function getCsrf()
+    public function getCsrf(): string
     {
         return $this->csrf;
     }
 
     /**
+     * Set CSRF token.
      *
-     * @param string $csrf
+     * @param $csrf
      */
     public function setCsrf($csrf): void
     {
@@ -151,46 +152,54 @@ class Gateway
     }
 
     /**
+     * Get username.
+     *
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
     /**
+     * Get password.
+     *
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
     /**
+     * Get login realm.
+     *
      * @return string
      */
-    public function getRealm()
+    public function getRealm(): string
     {
         return $this->realm;
     }
 
     /**
+     * Get access (ticket).
+     *
      * @return \YWatchman\ProxmoxMGW\Requests\Access
      */
-    public function getAccess()
+    public function getAccess(): Access
     {
         // Set access and return it.
         return $this->access ?: ($this->access = new Access($this->client));
     }
 
     /**
+     * Execute http request.
+     *
      * @param string $endpoint
      * @param string $method
      * @param array $params
      *
      * @return \GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface|null
-     *
-     *
      * @throws InvalidRequestException
      */
     public function makeRequest(string $endpoint, string $method = 'GET', array $params = [])
@@ -239,10 +248,12 @@ class Gateway
     }
 
     /**
+     * Get API url.
+     *
      * @param $endpoint
      * @return string
      */
-    protected function getRequestUrl($endpoint)
+    protected function getRequestUrl($endpoint): string
     {
         return sprintf(
             'https://%s:%d/api2/%s/%s',

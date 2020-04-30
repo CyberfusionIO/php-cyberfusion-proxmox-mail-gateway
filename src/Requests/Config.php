@@ -3,17 +3,17 @@
 namespace YWatchman\ProxmoxMGW\Requests;
 
 use Exception;
-use Support\InetAddr;
+use YWatchman\ProxmoxMGW\Support\InetAddr;
 
 class Config
 {
-    /** @var Gateway  */
+    /** @var Client  */
     protected $client;
 
     /** @var string  */
     protected $cidr;
 
-    public function __construct(Gateway $client, string $cidr)
+    public function __construct(Client $client, string $cidr)
     {
         $this->client = $client;
         $this->cidr = $cidr;
