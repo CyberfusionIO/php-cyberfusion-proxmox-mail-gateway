@@ -1,6 +1,6 @@
 <?php
 
-namespace YWatchman\ProxmoxMGW\Requests;
+namespace YWatchman\ProxmoxMGW;
 
 use GuzzleHttp\Client as HttpClient;
 use YWatchman\ProxmoxMGW\Exceptions\AuthenticationException;
