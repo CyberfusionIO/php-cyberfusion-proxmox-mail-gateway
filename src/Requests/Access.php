@@ -2,6 +2,7 @@
 
 namespace YWatchman\ProxmoxMGW\Requests;
 
+use YWatchman\ProxmoxMGW\Client;
 use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
 
 class Access
