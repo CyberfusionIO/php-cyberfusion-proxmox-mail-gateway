@@ -105,7 +105,7 @@ class Client
 
         $this->client = $this;
         $this->httpClient = new HttpClient([
-            'defaults' => [
+            'headers' => [
                 'User-Agent' => $userAgent
             ]
         ]);
