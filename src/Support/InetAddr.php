@@ -49,19 +49,24 @@ class InetAddr
     /**
      * Check if supplied address is a cidr.
      *
+     * @param bool $exceptions
      * @return bool
      * @throws InetAddrValidationException
      */
-    public function isCidr()
+    public function isCidr($exceptions = true)
     {
         if (substr_count($this->addr, '/') == 1) {
             return true;
         }
 
-        throw new InetAddrValidationException(
-            'Invalid address, too many slashes.',
-            InetAddrValidationException::CIDR_TOO_MANY_SLASHES
-        );
+        if ($exceptions) {
+            throw new InetAddrValidationException(
+                'Invalid address, too many slashes.',
+                InetAddrValidationException::CIDR_TOO_MANY_SLASHES
+            );
+        }
+
+        return false;
     }
 
     /**

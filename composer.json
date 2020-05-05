@@ -14,6 +14,11 @@
             "YWatchman\\ProxmoxMGW\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "YWatchman\\ProxmoxMGW\\Tests\\": "tests/"
+        }
+    },
     "license": "private",
     "authors": [
         {

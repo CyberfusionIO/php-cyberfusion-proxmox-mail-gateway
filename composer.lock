@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10ebad76acd407cd0f76abf29605475e",
+    "content-hash": "ba7c825a3222be627d9c5d626a025a15",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -231,27 +231,27 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "6.x-dev",
+            "version": "7.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "e08ea83602d96cdfd7106a15f07878935c1a7675"
+                "reference": "d05e0fc82ccfe401880309a246cd2e4f27eef992"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/e08ea83602d96cdfd7106a15f07878935c1a7675",
-                "reference": "e08ea83602d96cdfd7106a15f07878935c1a7675",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/d05e0fc82ccfe401880309a246cd2e4f27eef992",
+                "reference": "d05e0fc82ccfe401880309a246cd2e4f27eef992",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2",
+                "php": "^7.2.5",
                 "psr/container": "^1.0",
                 "psr/simple-cache": "^1.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.x-dev"
+                    "dev-master": "7.x-dev"
                 }
             },
             "autoload": {
@@ -271,45 +271,46 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2020-02-27T19:49:00+00:00"
+            "time": "2020-04-28T20:54:46+00:00"
         },
         {
             "name": "illuminate/support",
-            "version": "v6.0.0",
+            "version": "7.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "9f1dc5486c2e9d25e33a9239e5ae088d876ef805"
+                "reference": "e8bbbb2f9cd406ab21136ca2ef932df241ac6fc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/9f1dc5486c2e9d25e33a9239e5ae088d876ef805",
-                "reference": "9f1dc5486c2e9d25e33a9239e5ae088d876ef805",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/e8bbbb2f9cd406ab21136ca2ef932df241ac6fc8",
+                "reference": "e8bbbb2f9cd406ab21136ca2ef932df241ac6fc8",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^1.1",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "illuminate/contracts": "^6.0",
-                "nesbot/carbon": "^2.0",
-                "php": "^7.2"
+                "illuminate/contracts": "^7.0",
+                "nesbot/carbon": "^2.17",
+                "php": "^7.2.5",
+                "voku/portable-ascii": "^1.4.8"
             },
             "conflict": {
                 "tightenco/collect": "<5.5.33"
             },
             "suggest": {
-                "illuminate/filesystem": "Required to use the composer class (^6.0).",
+                "illuminate/filesystem": "Required to use the composer class (^7.0).",
                 "moontoast/math": "Required to use ordered UUIDs (^1.1).",
-                "ramsey/uuid": "Required to use Str::uuid() (^3.7).",
-                "symfony/process": "Required to use the composer class (^4.3.4).",
-                "symfony/var-dumper": "Required to use the dd function (^4.3.4).",
-                "vlucas/phpdotenv": "Required to use the Env class and env helper (^3.3)."
+                "ramsey/uuid": "Required to use Str::uuid() (^3.7|^4.0).",
+                "symfony/process": "Required to use the composer class (^5.0).",
+                "symfony/var-dumper": "Required to use the dd function (^5.0).",
+                "vlucas/phpdotenv": "Required to use the Env class and env helper (^4.0)."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.0-dev"
+                    "dev-master": "7.x-dev"
                 }
             },
             "autoload": {
@@ -332,7 +333,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2019-09-03T13:35:30+00:00"
+            "time": "2020-05-04T19:03:52+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -676,12 +677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "d642c61d39e41d7158f0990f41ba71ebc2c41011"
+                "reference": "3a5c9dee4145da04b240da2df3d4a759619bc2be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/d642c61d39e41d7158f0990f41ba71ebc2c41011",
-                "reference": "d642c61d39e41d7158f0990f41ba71ebc2c41011",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/3a5c9dee4145da04b240da2df3d4a759619bc2be",
+                "reference": "3a5c9dee4145da04b240da2df3d4a759619bc2be",
                 "shasum": ""
             },
             "require": {
@@ -746,7 +747,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2020-04-12T16:48:26+00:00"
+            "time": "2020-05-04T15:54:21+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -804,6 +805,55 @@
                 "standards"
             ],
             "time": "2020-02-14T07:31:56+00:00"
+        },
+        {
+            "name": "voku/portable-ascii",
+            "version": "1.4.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/voku/portable-ascii.git",
+                "reference": "240e93829a5f985fab0984a6e55ae5e26b78a334"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/240e93829a5f985fab0984a6e55ae5e26b78a334",
+                "reference": "240e93829a5f985fab0984a6e55ae5e26b78a334",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0 || ~7.0"
+            },
+            "suggest": {
+                "ext-intl": "Use Intl for transliterator_transliterate() support"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "voku\\": "src/voku/",
+                    "voku\\tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lars Moelleken",
+                    "homepage": "http://www.moelleken.org/"
+                }
+            ],
+            "description": "Portable ASCII library - performance optimized (ascii) string functions for php.",
+            "homepage": "https://github.com/voku/portable-ascii",
+            "keywords": [
+                "ascii",
+                "clean",
+                "php"
+            ],
+            "time": "2020-03-13T01:23:26+00:00"
         }
     ],
     "packages-dev": [
@@ -1599,12 +1649,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5a8f1452cb7028e7c7173e430264c07fbc6fe858"
+                "reference": "94821def76750d335505c384d05fcb3394130615"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5a8f1452cb7028e7c7173e430264c07fbc6fe858",
-                "reference": "5a8f1452cb7028e7c7173e430264c07fbc6fe858",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/94821def76750d335505c384d05fcb3394130615",
+                "reference": "94821def76750d335505c384d05fcb3394130615",
                 "shasum": ""
             },
             "require": {
@@ -1674,7 +1724,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-04-27T05:03:54+00:00"
+            "time": "2020-05-05T05:16:12+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2445,7 +2495,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.1",
-        "lib-curl": "*"
+        "lib-curl": "*",
+        "ext-json": "*"
     },
     "platform-dev": []
 }
