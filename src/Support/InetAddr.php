@@ -8,8 +8,11 @@ use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
 class InetAddr
 {
 
-    /** @var string IP Address */
+    /** @var string CIDR */
     protected $addr;
+
+    /** @var string Prefix */
+    protected $prefix;
 
     /** @var int Netmask */
     protected $netmask;
@@ -24,9 +27,12 @@ class InetAddr
         $this->addr = $addr;
 
         try {
-            $this->netmask = $this->isCidr() ? $this->getNetmask() : $netmask;
-            // Todo: dit is troep.
+            if ($this->isCidr()) {
+                list($this->prefix, $this->netmask) = $this->getNetmaskAndPrefix();
+            }
         } catch (InetAddrValidationException $e) {
+            $this->prefix = $addr;
+            $this->netmask = $netmask;
         }
     }
 
@@ -35,27 +41,32 @@ class InetAddr
      *
      * @return mixed
      */
-    public function getNetmask()
+    public function getNetmaskAndPrefix()
     {
-        return explode('/', $this->addr)[1];
+        return explode('/', $this->addr);
     }
 
     /**
      * Check if supplied address is a cidr.
      *
+     * @param bool $exceptions
      * @return bool
      * @throws InetAddrValidationException
      */
-    public function isCidr()
+    public function isCidr($exceptions = true)
     {
         if (substr_count($this->addr, '/') == 1) {
             return true;
         }
 
-        throw new InetAddrValidationException(
-            'Invalid address, too many slashes.',
-            InetAddrValidationException::CIDR_TOO_MANY_SLASHES
-        );
+        if ($exceptions) {
+            throw new InetAddrValidationException(
+                'Invalid address, too many slashes.',
+                InetAddrValidationException::CIDR_TOO_MANY_SLASHES
+            );
+        }
+
+        return false;
     }
 
     /**
@@ -65,7 +76,7 @@ class InetAddr
      */
     public function isV6()
     {
-        return filter_var($this->addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        return filter_var($this->prefix, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
     }
 
     /**
@@ -75,7 +86,7 @@ class InetAddr
      */
     public function isV4()
     {
-        return filter_var($this->addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+        return filter_var($this->prefix, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     }
 
     /**
