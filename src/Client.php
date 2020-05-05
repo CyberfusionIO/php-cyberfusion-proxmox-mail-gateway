@@ -5,6 +5,7 @@ namespace YWatchman\ProxmoxMGW;
 use GuzzleHttp\Client as HttpClient;
 use YWatchman\ProxmoxMGW\Exceptions\AuthenticationException;
 use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
+use YWatchman\ProxmoxMGW\Requests\Access;
 
 class Client
 {
@@ -64,7 +65,7 @@ class Client
     protected $responseType = 'json';
 
     /**
-     * @var \YWatchman\ProxmoxMGW\Requests\Client $client
+     * @var \YWatchman\ProxmoxMGW\Client $client
      */
     protected $client;
 
@@ -95,7 +96,8 @@ class Client
             // Throw exception if username or password is empty
             throw new AuthenticationException(
                 'Missing username or password',
-                AuthenticationException::AUTH_MISSING_CREDENTIALS);
+                AuthenticationException::AUTH_MISSING_CREDENTIALS
+            );
         }
         $this->hostname = $hostname;
         $this->username = $username;
@@ -103,12 +105,12 @@ class Client
         $this->realm = $realm;
         $this->port = $port;
 
-        $this->client = $this;
         $this->httpClient = new HttpClient([
             'headers' => [
                 'User-Agent' => $userAgent
             ]
         ]);
+        $this->client = $this;
     }
 
     /**
@@ -126,7 +128,7 @@ class Client
      *
      * @param string $ticket
      */
-    public function setTicket($ticket): void
+    protected function setTicket($ticket): void
     {
         $this->ticket = $ticket;
     }
@@ -146,7 +148,7 @@ class Client
      *
      * @param $csrf
      */
-    public function setCsrf($csrf): void
+    protected function setCsrf($csrf): void
     {
         $this->csrf = $csrf;
     }
@@ -186,10 +188,19 @@ class Client
      *
      * @return \YWatchman\ProxmoxMGW\Requests\Access
      */
-    public function getAccess(): Access
+    private function getAccess(): Access
     {
         // Set access and return it.
         return $this->access ?: ($this->access = new Access($this->client));
+    }
+
+    public function setAccess(): void
+    {
+        $this->getAccess();
+        $this->access->getTicket();
+
+        $this->setTicket($this->access->ticket);
+        $this->setCsrf($this->access->csrf);
     }
 
     /**
@@ -210,7 +221,7 @@ class Client
         // Initialise variables for later use
         $cookies = $headers = null;
 
-        if ($this->ticket !== null) {
+        if (!empty($this->ticket)) {
             $cookies = [
                 'PMGAuthCookie' => $this->ticket // Authentication cookie for PMG
             ];
@@ -253,10 +264,10 @@ class Client
      * @param $endpoint
      * @return string
      */
-    protected function getRequestUrl($endpoint): string
+    protected function getRequestUrl(string $endpoint): string
     {
         return sprintf(
-            'https://%s:%d/api2/%s/%s',
+            'https://%s:%d/api2/%s%s',
             $this->hostname,
             $this->port,
             $this->responseType,

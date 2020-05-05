@@ -2,7 +2,7 @@
 
 namespace YWatchman\ProxmoxMGW\Endpoints;
 
-use YWatchman\ProxmoxMGW\Requests\Client;
+use YWatchman\ProxmoxMGW\Client;
 
 abstract class Endpoint
 {
@@ -21,6 +21,4 @@ abstract class Endpoint
     {
         $this->client = $client;
     }
-
-
 }
