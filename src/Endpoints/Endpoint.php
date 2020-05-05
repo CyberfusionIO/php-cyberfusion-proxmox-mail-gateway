@@ -1,19 +1,19 @@
 <?php
 
+
 namespace YWatchman\ProxmoxMGW\Endpoints;
+
 
 use YWatchman\ProxmoxMGW\Client;
 
 abstract class Endpoint
 {
 
-    /**
-     * @var Client
-     */
+    /** @var Client  */
     protected $client;
 
     /**
-     * Identity constructor.
+     * Endpoint constructor.
      *
      * @param Client $client
      */
@@ -21,4 +21,5 @@ abstract class Endpoint
     {
         $this->client = $client;
     }
+
 }
