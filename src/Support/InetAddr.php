@@ -81,7 +81,6 @@ class InetAddr
      */
     public function isV4()
     {
-
         return filter_var($this->prefix, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     }
 

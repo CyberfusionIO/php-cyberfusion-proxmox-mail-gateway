@@ -3,7 +3,6 @@
 
 namespace YWatchman\ProxmoxMGW\Result;
 
-
 class Result
 {
 
@@ -60,6 +59,4 @@ class Result
 
         return $this->data;
     }
-
-
 }

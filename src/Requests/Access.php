@@ -7,17 +7,28 @@ use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
 
 class Access
 {
+    /** @var Client  */
     protected $client;
 
+    /** @var string */
     public $ticket;
 
+    /** @var string */
     public $csrf;
 
+    /**
+     * Access constructor.
+     *
+     * @param Client $client
+     */
     public function __construct(Client $client)
     {
         $this->client = $client;
     }
 
+    /**
+     * Setup authentication data.
+     */
     public function getTicket(): void
     {
         try {

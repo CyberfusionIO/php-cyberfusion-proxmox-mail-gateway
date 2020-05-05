@@ -1,8 +1,6 @@
 <?php
 
-
 namespace YWatchman\ProxmoxMGW\Endpoints;
-
 
 use YWatchman\ProxmoxMGW\Client;
 
@@ -21,5 +19,4 @@ abstract class Endpoint
     {
         $this->client = $client;
     }
-
 }

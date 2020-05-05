@@ -1,10 +1,7 @@
 <?php
 
-
 namespace YWatchman\ProxmoxMGW\Endpoints;
 
-
-use Illuminate\Support\Collection;
 use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
 use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
 use YWatchman\ProxmoxMGW\Exceptions\NetworkException;
@@ -92,5 +89,4 @@ class NetworkEndpoint extends Endpoint
 
         return new Result(true, 'Network is created.');
     }
-
 }

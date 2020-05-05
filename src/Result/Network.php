@@ -3,7 +3,6 @@
 
 namespace YWatchman\ProxmoxMGW\Result;
 
-
 use Illuminate\Contracts\Support\Arrayable;
 
 class Network implements Arrayable
