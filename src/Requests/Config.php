@@ -4,6 +4,7 @@ namespace YWatchman\ProxmoxMGW\Requests;
 
 use Exception;
 use YWatchman\ProxmoxMGW\Client;
+use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
 use YWatchman\ProxmoxMGW\Support\InetAddr;
 
 class Config
@@ -20,6 +21,12 @@ class Config
         $this->cidr = $cidr;
     }
 
+    /**
+     * Get networks that can access Proxmox.
+     *
+     * @return \GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface|null
+     * @throws \YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException
+     */
     public function getNetworks()
     {
         return $this->client->makeRequest('/config/mynetworks');
@@ -30,12 +37,12 @@ class Config
         $validator = new InetAddr($cidr);
         $validator->validateCidr();
 
-        try {
-            $this->client->makeRequest('/config/mynetworks/' . $cidr, 'DELETE');
-        } catch (Exception $e) {
-            return false;
-        }
-        return true;
+        $request = $this->client->makeRequest(
+            sprintf('/config/mynetworks/%s', $cidr),
+            'DELETE'
+        );
+
+        return $request;
     }
 
     public function addNetwork($cidr, $comment = 'Not set')
@@ -43,14 +50,11 @@ class Config
         $validator = new InetAddr($cidr);
         $validator->validateCidr();
 
-        try {
-            $this->client->makeRequest('/config/mynetworks', 'POST', [
-                'cidr' => $cidr,
-                'comment' => $comment,
-            ]);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        $request = $this->client->makeRequest('/config/mynetworks', 'POST', [
+            'cidr' => $cidr,
+            'comment' => $comment,
+        ]);
+
+        return $request;
     }
 }
