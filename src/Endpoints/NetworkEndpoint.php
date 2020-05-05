@@ -17,13 +17,17 @@ class NetworkEndpoint extends Endpoint
      *
      * @return Result
      * @throws InvalidRequestException
+     * @throws NetworkException
      */
     public function getNetworks()
     {
         $request = $this->client->makeRequest('/config/mynetworks');
 
         if ($request->getStatusCode() !== 200) {
-//            throw new ProxmoxExcep
+            throw new NetworkException(
+                'Could not retrieve networks due to an unknown issue.',
+                NetworkException::NETWORK_UNKNOWN_ISSUE
+            );
         }
 
         $data = json_decode($request->getBody()->getContents());

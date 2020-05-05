@@ -14,4 +14,5 @@ abstract class ProxmoxException extends \Exception
 
     public const NETWORK_DOES_NOT_EXIST = 400;
     public const NETWORK_ALREADY_EXISTS = 401;
+    public const NETWORK_UNKNOWN_ISSUE = 402;
 }
