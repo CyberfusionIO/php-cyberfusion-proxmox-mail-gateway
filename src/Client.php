@@ -3,6 +3,9 @@
 namespace YWatchman\ProxmoxMGW;
 
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Cookie\SetCookie;
+use Psr\Http\Message\ResponseInterface;
 use YWatchman\ProxmoxMGW\Exceptions\AuthenticationException;
 use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
 use YWatchman\ProxmoxMGW\Requests\Access;
@@ -209,22 +212,24 @@ class Client
      * @param string $endpoint
      * @param string $method
      * @param array $params
-     *
-     * @return \GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface|null
+     * @return ResponseInterface
      * @throws InvalidRequestException
      */
-    public function makeRequest(string $endpoint, string $method = 'GET', array $params = [])
+    public function makeRequest(string $endpoint, string $method = 'GET', array $params = []): ResponseInterface
     {
         // Get API url and append endpoint
         $url = $this->getRequestUrl($endpoint);
 
         // Initialise variables for later use
-        $cookies = $headers = null;
+        $headers = null;
 
+        $cookieJar = new CookieJar();
         if (!empty($this->ticket)) {
-            $cookies = [
-                'PMGAuthCookie' => $this->ticket // Authentication cookie for PMG
-            ];
+            $cookieJar->setCookie(new SetCookie(
+                [
+                    'PMGAuthCookie' => $this->ticket, // Authentication cookie for PMG
+                ]
+            ));
 
             $headers = ['CSRFPreventionToken' => $this->csrf];
         }
@@ -236,7 +241,7 @@ class Client
         $options = [
             'verify' => false, // Todo: check debug
             'exceptions' => false,
-            'cookies' => $cookies,
+            'cookies' => $cookieJar,
             'headers' => $headers,
             'query' => $params
         ];
