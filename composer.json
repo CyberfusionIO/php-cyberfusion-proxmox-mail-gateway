@@ -1,14 +1,16 @@
 {
     "name": "ywatchman/proxmox-mgw",
     "description": "Proxmox Mail Gateway laravel library",
-    "version": "v1.0.0",
     "type": "library",
     "require": {
         "php": ">=7.1",
         "lib-curl": "*",
-        "guzzlehttp/guzzle": "~5.3",
+        "guzzlehttp/guzzle": "^6.5.2",
         "illuminate/support": "^5.8|6.0|^7.0",
         "ext-json": "*"
+    },
+    "config": {
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
@@ -20,14 +22,14 @@
             "YWatchman\\ProxmoxMGW\\Tests\\": "tests/"
         }
     },
-    "license": "private",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Yvan Watchman",
             "email": "ywatchman@cyberfusion.nl"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require-dev": {
         "phpunit/phpunit": "^8.5.2",
         "mockery/mockery": "^1.3"
