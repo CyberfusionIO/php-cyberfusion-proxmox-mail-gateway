@@ -2,32 +2,34 @@
 
 namespace YWatchman\ProxmoxMGW\Endpoints;
 
-use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
+use Exception;
+use Illuminate\Support\Str;
 use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
-use YWatchman\ProxmoxMGW\Exceptions\NetworkException;
 use YWatchman\ProxmoxMGW\Result\Network;
 use YWatchman\ProxmoxMGW\Result\Result;
 use YWatchman\ProxmoxMGW\Support\InetAddr;
 
 class NetworkEndpoint extends Endpoint
 {
-
     /**
      * Get networks that can access Proxmox.
      *
      * @return Result
-     * @throws InvalidRequestException
-     * @throws NetworkException
      */
-    public function getNetworks()
+    public function getNetworks(): Result
     {
-        $request = $this->client->makeRequest('/config/mynetworks');
+        try {
+            $request = $this
+                ->client
+                ->makeRequest('/config/mynetworks');
+        } catch (InvalidRequestException $exception) {
+            return new Result(false, $exception->getMessage());
+        }
 
         if ($request->getStatusCode() !== 200) {
-            throw new NetworkException(
-                'Could not retrieve networks due to an unknown issue.',
-                NetworkException::NETWORK_UNKNOWN_ISSUE
-            );
+            return new Result(false, $request->getReasonPhrase(), [
+                'data' => json_decode($request->getBody()->getContents())
+            ]);
         }
 
         $data = json_decode($request->getBody()->getContents());
@@ -46,51 +48,92 @@ class NetworkEndpoint extends Endpoint
     }
 
     /**
-     * Delete Proxmox Relay network.
+     * The proxmox api requires a full cidr. So when a single ip is provided, add the /32 part.
      *
-     * @param $cidr
-     * @return Result
-     * @throws NetworkException
-     * @throws InetAddrValidationException
-     * @throws InvalidRequestException
+     * @param string $cidr
+     * @return string
      */
-    public function delete($cidr)
+    private function prepareCidr(string $cidr): string
     {
-        $validator = new InetAddr($cidr);
-        $validator->validateCidr();
-
-        $request = $this->client->makeRequest(
-            sprintf('/config/mynetworks/%s', $cidr),
-            'DELETE'
-        );
-
-        if ($request->getStatusCode() === 500) {
-            throw new NetworkException(
-                sprintf('Network %s does not exist.', $cidr),
-                NetworkException::NETWORK_DOES_NOT_EXIST
-            );
+        if (Str::contains($cidr, '/')) {
+            return $cidr;
         }
 
-        return new Result(true, 'Network is deleted.');
+        return sprintf('%s/32', $cidr);
     }
 
-    public function create($cidr, $comment = 'Not set')
+    /**
+     * Delete Proxmox Relay network.
+     *
+     * @param string $cidr
+     * @return Result
+     */
+    public function delete(string $cidr): Result
     {
-        $validator = new InetAddr($cidr);
-        $validator->validateCidr();
+        $cidr = $this->prepareCidr($cidr);
 
-        $request = $this->client->makeRequest('/config/mynetworks', 'POST', [
-            'cidr' => $cidr,
-            'comment' => $comment,
-        ]);
-
-        if ($request->getStatusCode() === 500) {
-            throw new NetworkException(
-                sprintf('Network %s already exists.', $cidr),
-                NetworkException::NETWORK_ALREADY_EXISTS
-            );
+        try {
+            $validator = new InetAddr($cidr);
+            $validator->validateCidr();
+        } catch (Exception $exception) {
+            return new Result(false, $exception->getMessage());
         }
 
-        return new Result(true, 'Network is created.');
+        try {
+            $request = $this
+                ->client
+                ->makeRequest(
+                    sprintf('/config/mynetworks/%s', $cidr),
+                    'DELETE'
+                );
+        } catch (InvalidRequestException $exception) {
+            return new Result(false, $exception->getMessage());
+        }
+
+        return new Result(
+            $request->getStatusCode() === 200,
+            $request->getReasonPhrase(),
+            [
+                'data' => json_decode($request->getBody()->getContents())
+            ]
+        );
+    }
+
+    /**
+     * Create the Proxmox Relay network.
+     *
+     * @param string $cidr
+     * @param string $comment
+     * @return Result
+     */
+    public function create(string $cidr, string $comment = 'Not set'): Result
+    {
+        $cidr = $this->prepareCidr($cidr);
+
+        try {
+            $validator = new InetAddr($cidr);
+            $validator->validateCidr();
+        } catch (Exception $exception) {
+            return new Result(false, $exception->getMessage());
+        }
+
+        try {
+            $request = $this
+                ->client
+                ->makeRequest('/config/mynetworks', 'POST', [
+                    'cidr' => $cidr,
+                    'comment' => $comment,
+                ]);
+        } catch (InvalidRequestException $exception) {
+            return new Result(false, $exception->getMessage());
+        }
+
+        return new Result(
+            $request->getStatusCode() === 200,
+            $request->getReasonPhrase(),
+            [
+                'data' => json_decode($request->getBody()->getContents())
+            ]
+        );
     }
 }
