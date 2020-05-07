@@ -225,11 +225,12 @@ class Client
 
         $cookieJar = new CookieJar();
         if (!empty($this->ticket)) {
-            $cookieJar->setCookie(new SetCookie(
+            $cookieJar = CookieJar::fromArray(
                 [
-                    'PMGAuthCookie' => $this->ticket, // Authentication cookie for PMG
-                ]
-            ));
+                    'PMGAuthCookie' => $this->ticket,
+                ],
+                $this->hostname
+            );
 
             $headers = ['CSRFPreventionToken' => $this->csrf];
         }
