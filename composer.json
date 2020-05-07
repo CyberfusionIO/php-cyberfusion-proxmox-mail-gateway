@@ -1,7 +1,6 @@
 {
     "name": "ywatchman/proxmox-mgw",
     "description": "Proxmox Mail Gateway laravel library",
-    "version": "v1.0.0",
     "type": "library",
     "require": {
         "php": ">=7.1",
