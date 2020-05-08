@@ -59,7 +59,12 @@ class NetworkEndpoint extends Endpoint
             return $cidr;
         }
 
-        return sprintf('%s/32', $cidr);
+        $range = 32;
+        if (Str::contains($cidr, ':')) {
+            $range = 128;
+        }
+
+        return sprintf('%s/%d', $cidr, $range);
     }
 
     /**
