@@ -111,7 +111,7 @@ class NetworkEndpoint extends Endpoint
      * @param string $comment
      * @return Result
      */
-    public function create(string $cidr, string $comment = 'Not set'): Result
+    public function create(string $cidr, string $comment): Result
     {
         $cidr = $this->prepareCidr($cidr);
 
