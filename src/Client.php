@@ -39,9 +39,9 @@ class Client
 
     /**
      * Access request object for retrieving tokens etc.
-     * @var \YWatchman\ProxmoxMGW\Requests\Access $access
+     * @var \YWatchman\ProxmoxMGW\Requests\Access|null $access
      */
-    protected $access;
+    protected $access = null;
 
     /**
      * Authentication realm
@@ -149,7 +149,7 @@ class Client
     /**
      * Set CSRF token.
      *
-     * @param $csrf
+     * @param string $csrf
      */
     protected function setCsrf($csrf): void
     {
@@ -267,7 +267,7 @@ class Client
     /**
      * Get API url.
      *
-     * @param $endpoint
+     * @param string $endpoint
      * @return string
      */
     protected function getRequestUrl(string $endpoint): string
