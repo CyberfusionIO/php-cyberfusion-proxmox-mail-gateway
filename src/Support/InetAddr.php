@@ -7,22 +7,11 @@ use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
 
 class InetAddr
 {
+    protected string $addr;
+    protected string $prefix;
+    protected ?int $netmask;
 
-    /** @var string CIDR */
-    protected $addr;
-
-    /** @var string Prefix */
-    protected $prefix;
-
-    /** @var int Netmask */
-    protected $netmask;
-
-    /**
-     * InetAddr constructor.
-     * @param $addr
-     * @param null $netmask
-     */
-    public function __construct($addr, $netmask = null)
+    public function __construct(string $addr, int $netmask = null)
     {
         $this->addr = $addr;
 
@@ -36,12 +25,7 @@ class InetAddr
         }
     }
 
-    /**
-     * Returns the netmask.
-     *
-     * @return mixed
-     */
-    public function getNetmaskAndPrefix()
+    public function getNetmaskAndPrefix(): array
     {
         return explode('/', $this->addr);
     }
@@ -49,11 +33,9 @@ class InetAddr
     /**
      * Check if supplied address is a cidr.
      *
-     * @param bool $exceptions
-     * @return bool
      * @throws InetAddrValidationException
      */
-    public function isCidr($exceptions = true)
+    public function isCidr(bool $exceptions = true): bool
     {
         if (substr_count($this->addr, '/') == 1) {
             return true;
@@ -71,20 +53,16 @@ class InetAddr
 
     /**
      * Check if supplied address is an IPv6 Address.
-     *
-     * @return bool
      */
-    public function isV6()
+    public function isV6(): bool
     {
         return filter_var($this->prefix, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
     }
 
     /**
      * Check if supplied address is an IPv4 Address.
-     *
-     * @return mixed
      */
-    public function isV4()
+    public function isV4(): bool
     {
         return filter_var($this->prefix, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     }
@@ -92,10 +70,9 @@ class InetAddr
     /**
      * Validate CIDR length.
      *
-     * @return bool
      * @throws InetAddrValidationException
      */
-    public function validateCidr()
+    public function validateCidr(): bool
     {
         if ($this->netmask < 0 || $this->netmask > 128) {
             throw new InetAddrValidationException(
@@ -105,7 +82,7 @@ class InetAddr
         }
 
         if ($this->isV6()) {
-            return $this->netmask <= 128;
+            return true;
         }
 
         if ($this->isV4()) {

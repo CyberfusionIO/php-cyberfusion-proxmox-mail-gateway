@@ -3,7 +3,7 @@
     "description": "Proxmox Mail Gateway laravel library",
     "type": "library",
     "require": {
-        "php": "^7.3",
+        "php": "^7.4|^8.0",
         "lib-curl": "*",
         "guzzlehttp/guzzle": "^7.0",
         "illuminate/support": "^5.8|6.0|^7.0|^8.0",
@@ -31,7 +31,8 @@
     ],
     "minimum-stability": "stable",
     "require-dev": {
-        "phpunit/phpunit": "^8.5.2",
-        "mockery/mockery": "^1.3"
+        "mockery/mockery": "^1.4",
+        "phpstan/phpstan": "^1.2",
+        "phpunit/phpunit": "^9.0"
     }
 }

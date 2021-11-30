@@ -5,23 +5,10 @@ namespace YWatchman\ProxmoxMGW\Result;
 
 class Result
 {
+    protected bool $success = false;
+    protected string $message = '';
+    protected array $data = [];
 
-    /** @var bool  */
-    protected $success = false;
-
-    /** @var string  */
-    protected $message = '';
-
-    /** @var array  */
-    protected $data = [];
-
-    /**
-     * Result constructor.
-     *
-     * @param bool $success
-     * @param string $message
-     * @param array $data
-     */
     public function __construct(bool $success = false, string $message = '', array $data = [])
     {
         $this->success = $success;
@@ -29,17 +16,11 @@ class Result
         $this->data = $data;
     }
 
-    /**
-     * @return bool
-     */
     public function succeeded(): bool
     {
         return $this->success;
     }
 
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         return $this->message;
