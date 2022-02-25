@@ -1,5 +1,5 @@
 {
-    "name": "cyberfusion/proxmox-mgw",
+    "name": "cyberfusion/proxmox-mail-gateway",
     "description": "Proxmox Mail Gateway laravel library",
     "type": "library",
     "require": {
