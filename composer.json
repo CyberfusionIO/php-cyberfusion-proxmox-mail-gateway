@@ -3,7 +3,7 @@
     "description": "Proxmox Mail Gateway laravel library",
     "type": "library",
     "require": {
-        "php": "^8.01|^8.1",
+        "php": "^8.0.1|^8.1",
         "ext-json": "*",
         "lib-curl": "*",
         "guzzlehttp/guzzle": "^7.0",
