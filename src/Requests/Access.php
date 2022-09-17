@@ -2,25 +2,17 @@
 
 namespace YWatchman\ProxmoxMGW\Requests;
 
+use Throwable;
 use YWatchman\ProxmoxMGW\Client;
-use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
 
 class Access
 {
-    /** @var Client  */
-    protected $client;
+    protected Client $client;
 
-    /** @var string */
-    public $ticket;
+    public ?string $ticket = null;
 
-    /** @var string */
-    public $csrf;
+    public ?string $csrf = null;
 
-    /**
-     * Access constructor.
-     *
-     * @param Client $client
-     */
     public function __construct(Client $client)
     {
         $this->client = $client;
@@ -37,7 +29,7 @@ class Access
                 'password' => $this->client->getPassword(),
                 'realm' => $this->client->getRealm()
             ]);
-        } catch (InvalidRequestException $e) {
+        } catch (Throwable) {
             return;
         }
 

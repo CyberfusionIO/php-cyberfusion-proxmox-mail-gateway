@@ -2,9 +2,8 @@
 
 namespace YWatchman\ProxmoxMGW\Endpoints;
 
-use Exception;
 use Illuminate\Support\Str;
-use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
+use Throwable;
 use YWatchman\ProxmoxMGW\Result\Network;
 use YWatchman\ProxmoxMGW\Result\Result;
 use YWatchman\ProxmoxMGW\Support\InetAddr;
@@ -22,7 +21,7 @@ class NetworkEndpoint extends Endpoint
             $request = $this
                 ->client
                 ->makeRequest('/config/mynetworks');
-        } catch (InvalidRequestException $exception) {
+        } catch (Throwable $exception) {
             return new Result(false, $exception->getMessage());
         }
 
@@ -80,7 +79,7 @@ class NetworkEndpoint extends Endpoint
         try {
             $validator = new InetAddr($cidr);
             $validator->validateCidr();
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             return new Result(false, $exception->getMessage());
         }
 
@@ -91,7 +90,7 @@ class NetworkEndpoint extends Endpoint
                     sprintf('/config/mynetworks/%s', $cidr),
                     'DELETE'
                 );
-        } catch (InvalidRequestException $exception) {
+        } catch (Throwable $exception) {
             return new Result(false, $exception->getMessage());
         }
 
@@ -118,7 +117,7 @@ class NetworkEndpoint extends Endpoint
         try {
             $validator = new InetAddr($cidr);
             $validator->validateCidr();
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             return new Result(false, $exception->getMessage());
         }
 
@@ -129,7 +128,7 @@ class NetworkEndpoint extends Endpoint
                     'cidr' => $cidr,
                     'comment' => $comment,
                 ]);
-        } catch (InvalidRequestException $exception) {
+        } catch (Throwable $exception) {
             return new Result(false, $exception->getMessage());
         }
 
