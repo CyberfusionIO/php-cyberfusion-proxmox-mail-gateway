@@ -6,15 +6,8 @@ use YWatchman\ProxmoxMGW\Client;
 
 abstract class Endpoint
 {
+    protected Client $client;
 
-    /** @var Client  */
-    protected $client;
-
-    /**
-     * Endpoint constructor.
-     *
-     * @param Client $client
-     */
     public function __construct(Client $client)
     {
         $this->client = $client;
