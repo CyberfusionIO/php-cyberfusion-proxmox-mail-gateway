@@ -4,7 +4,7 @@ namespace YWatchman\ProxmoxMGW;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Cookie\CookieJar;
-use GuzzleHttp\Cookie\SetCookie;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use YWatchman\ProxmoxMGW\Exceptions\AuthenticationException;
 use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
@@ -12,70 +12,61 @@ use YWatchman\ProxmoxMGW\Requests\Access;
 
 class Client
 {
-
     /**
      * PMG hostname
-     * @var string $hostname
      */
-    protected $hostname;
+    protected string $hostname;
 
     /**
      * PMG Port
-     * @var int $port
      */
-    protected $port;
+    protected int $port;
 
     /**
      * PMG username
-     * @var string $username
      */
-    protected $username;
+    protected string $username;
 
     /**
      * PMG Password
-     * @var string $password
      */
-    protected $password;
+    protected string $password;
 
     /**
      * Access request object for retrieving tokens etc.
-     * @var \YWatchman\ProxmoxMGW\Requests\Access|null $access
      */
-    protected $access = null;
+    protected ?Access $access = null;
 
     /**
      * Authentication realm
      * @var string $realm
      */
-    protected $realm;
+    protected string $realm;
 
     /**
      * Login cookie from PMG
-     * @var string $ticket
      */
-    protected $ticket = '';
+    protected string $ticket = '';
 
     /**
      * Protection token retrieved from API
-     * @var string $csrf
      */
-    protected $csrf = '';
+    protected string $csrf = '';
 
     /**
      * Can be json or extjs
-     * @var string $responseType
      */
-    protected $responseType = 'json';
+    protected string $responseType = 'json';
 
     /**
-     * @var \YWatchman\ProxmoxMGW\Client $client
+     * @var Client $client
      */
-    protected $client;
+    protected Client $client;
 
     /**
-     * @var \GuzzleHttp\Client $httpClient
+     * @var HttpClient $httpClient
      */
-    protected $httpClient;
+    protected HttpClient $httpClient;
 
     /**
      * Gateway constructor.
@@ -116,81 +107,41 @@ class Client
         $this->client = $this;
     }
 
-    /**
-     * Get ticket.
-     *
-     * @return string
-     */
     public function getTicket(): string
     {
         return $this->ticket;
     }
 
-    /**
-     * Set ticket.
-     *
-     * @param string $ticket
-     */
-    protected function setTicket($ticket): void
+    protected function setTicket(string $ticket): void
     {
         $this->ticket = $ticket;
     }
 
-    /**
-     * Get CSRF token.
-     *
-     * @return string
-     */
     public function getCsrf(): string
     {
         return $this->csrf;
     }
 
-    /**
-     * Set CSRF token.
-     *
-     * @param string $csrf
-     */
-    protected function setCsrf($csrf): void
+    protected function setCsrf(string $csrf): void
     {
         $this->csrf = $csrf;
     }
 
-    /**
-     * Get username.
-     *
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * Get password.
-     *
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * Get login realm.
-     *
-     * @return string
-     */
     public function getRealm(): string
     {
         return $this->realm;
     }
 
-    /**
-     * Get access (ticket).
-     *
-     * @return \YWatchman\ProxmoxMGW\Requests\Access
-     */
     private function getAccess(): Access
     {
         // Set access and return it.
@@ -209,11 +160,7 @@ class Client
     /**
      * Execute http request.
      *
-     * @param string $endpoint
-     * @param string $method
-     * @param array $params
-     * @return ResponseInterface
-     * @throws InvalidRequestException
+     * @throws InvalidRequestException|GuzzleException
      */
     public function makeRequest(string $endpoint, string $method = 'GET', array $params = []): ResponseInterface
     {
@@ -266,9 +213,6 @@ class Client
 
     /**
      * Get API url.
-     *
-     * @param string $endpoint
-     * @return string
      */
     protected function getRequestUrl(string $endpoint): string
     {

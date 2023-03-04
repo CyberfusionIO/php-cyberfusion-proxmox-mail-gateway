@@ -19,7 +19,7 @@ class InetAddr
             if ($this->isCidr()) {
                 list($this->prefix, $this->netmask) = $this->getNetmaskAndPrefix();
             }
-        } catch (InetAddrValidationException $e) {
+        } catch (InetAddrValidationException) {
             $this->prefix = $addr;
             $this->netmask = $netmask;
         }

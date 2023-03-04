@@ -2,7 +2,9 @@
 
 namespace YWatchman\ProxmoxMGW\Exceptions;
 
-abstract class ProxmoxException extends \Exception
+use Exception;
+
+abstract class ProxmoxException extends Exception
 {
     public const CIDR_CANNOT_FIND_ADDRESS = 100;
     public const CIDR_INVALID = 101;

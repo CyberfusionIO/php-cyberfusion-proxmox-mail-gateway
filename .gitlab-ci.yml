@@ -1,0 +1,46 @@
+stages:
+  - preparation
+  - testing
+  - analysis
+
+image: lorisleiva/laravel-docker:8.1
+
+composer:
+  stage: preparation
+  before_script:
+    - composer config --auth http-basic.vcs.cyberfusion.nl "gitlab-ci-token" "$CI_JOB_TOKEN" --no-ansi --no-interaction
+  script:
+    - composer --version
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 1 days
+    when: always
+  cache:
+    paths:
+      - vendor/
+
+phpunit:
+  stage: testing
+  dependencies:
+    - composer
+  script:
+    - php -v
+    - php -d memory_limit=4G ./vendor/bin/phpunit --no-coverage
+  artifacts:
+    paths:
+      - ./storage/logs # for debugging
+    expire_in: 1 days
+    when: on_failure
+
+phpstan:
+  stage: analysis
+  dependencies:
+    - composer
+  script:
+    - ./vendor/bin/phpstan --version
+    - php -d memory_limit=4G ./vendor/bin/phpstan analyse -v --no-ansi --no-interaction
+  cache:
+    paths:
+      - vendor/

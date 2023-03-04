@@ -1,6 +1,5 @@
 <?php
 
-
 namespace YWatchman\ProxmoxMGW\Result;
 
 class Result
@@ -26,11 +25,7 @@ class Result
         return $this->message;
     }
 
-    /**
-     * @param string|null $key
-     * @return mixed
-     */
-    public function getData(string $key = null)
+    public function getData(string $key = null): mixed
     {
         if (! is_null($key)) {
             return array_key_exists($key, $this->data)
