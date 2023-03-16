@@ -1,6 +1,6 @@
 {
     "name": "cyberfusion/proxmox-mail-gateway",
-    "description": "Proxmox Mail Gateway laravel library",
+    "description": "PHP client for Proxmox Mail Gateway API",
     "type": "library",
     "require": {
         "php": "^8.0.1|^8.1",

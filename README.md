@@ -1,8 +1,13 @@
-# Proxmox Mail Gateway
+# proxmox-mail-gateway
 
-Composer library to communicate with proxmox mail gateway machines.
+PHP client for Proxmox Mail Gateway API.
+
+Documentation: https://pmg.proxmox.com/pmg-docs/api-viewer/index.html
+
+# Usage
 
 ## Example
+
 ```php
 use YWatchman\ProxmoxMGW\Client;
 use YWatchman\ProxmoxMGW\Endpoints\NetworkEndpoint;
@@ -12,5 +17,4 @@ $client->setAccess();
 
 $endpoint = new NetworkEndpoint($client);
 $network = $endpoint->getNetworks();
-
 ```
