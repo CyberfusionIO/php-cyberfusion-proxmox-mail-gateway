@@ -5,7 +5,9 @@ namespace YWatchman\ProxmoxMGW\Result;
 class Result
 {
     protected bool $success = false;
+
     protected string $message = '';
+
     protected array $data = [];
 
     public function __construct(bool $success = false, string $message = '', array $data = [])
