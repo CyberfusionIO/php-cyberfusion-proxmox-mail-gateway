@@ -12,8 +12,6 @@ class NetworkEndpoint extends Endpoint
 {
     /**
      * Get networks that can access Proxmox.
-     *
-     * @return Result
      */
     public function getNetworks(): Result
     {
@@ -27,7 +25,7 @@ class NetworkEndpoint extends Endpoint
 
         if ($request->getStatusCode() !== 200) {
             return new Result(false, $request->getReasonPhrase(), [
-                'data' => json_decode($request->getBody()->getContents())
+                'data' => json_decode($request->getBody()->getContents()),
             ]);
         }
 
@@ -48,9 +46,6 @@ class NetworkEndpoint extends Endpoint
 
     /**
      * The proxmox api requires a full cidr. So when a single ip is provided, add the /32 part.
-     *
-     * @param string $cidr
-     * @return string
      */
     private function prepareCidr(string $cidr): string
     {
@@ -68,9 +63,6 @@ class NetworkEndpoint extends Endpoint
 
     /**
      * Delete Proxmox Relay network.
-     *
-     * @param string $cidr
-     * @return Result
      */
     public function delete(string $cidr): Result
     {
@@ -98,17 +90,13 @@ class NetworkEndpoint extends Endpoint
             $request->getStatusCode() === 200,
             $request->getReasonPhrase(),
             [
-                'data' => json_decode($request->getBody()->getContents())
+                'data' => json_decode($request->getBody()->getContents()),
             ]
         );
     }
 
     /**
      * Create the Proxmox Relay network.
-     *
-     * @param string $cidr
-     * @param string $comment
-     * @return Result
      */
     public function create(string $cidr, string $comment): Result
     {
@@ -136,7 +124,7 @@ class NetworkEndpoint extends Endpoint
             $request->getStatusCode() === 200,
             $request->getReasonPhrase(),
             [
-                'data' => json_decode($request->getBody()->getContents())
+                'data' => json_decode($request->getBody()->getContents()),
             ]
         );
     }

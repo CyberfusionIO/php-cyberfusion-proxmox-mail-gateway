@@ -27,7 +27,7 @@ class Access
             $result = $this->client->makeRequest('/access/ticket', 'POST', [
                 'username' => $this->client->getUsername(),
                 'password' => $this->client->getPassword(),
-                'realm' => $this->client->getRealm()
+                'realm' => $this->client->getRealm(),
             ]);
         } catch (Throwable) {
             return;

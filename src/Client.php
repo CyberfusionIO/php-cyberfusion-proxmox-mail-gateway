@@ -39,7 +39,6 @@ class Client
 
     /**
      * Authentication realm
-     * @var string $realm
      */
     protected string $realm;
 
@@ -58,24 +57,13 @@ class Client
      */
     protected string $responseType = 'json';
 
-    /**
-     * @var Client $client
-     */
     protected Client $client;
 
-    /**
-     * @var HttpClient $httpClient
-     */
     protected HttpClient $httpClient;
 
     /**
      * Gateway constructor.
-     * @param string $hostname
-     * @param string $username
-     * @param string $password
-     * @param string $realm
-     * @param int $port
-     * @param string $userAgent
+     *
      * @throws AuthenticationException
      */
     public function __construct(
@@ -101,8 +89,8 @@ class Client
 
         $this->httpClient = new HttpClient([
             'headers' => [
-                'User-Agent' => $userAgent
-            ]
+                'User-Agent' => $userAgent,
+            ],
         ]);
         $this->client = $this;
     }
@@ -171,7 +159,7 @@ class Client
         $headers = null;
 
         $cookieJar = new CookieJar();
-        if (!empty($this->ticket)) {
+        if (! empty($this->ticket)) {
             $cookieJar = CookieJar::fromArray(
                 [
                     'PMGAuthCookie' => $this->ticket,
@@ -191,7 +179,7 @@ class Client
             'exceptions' => false,
             'cookies' => $cookieJar,
             'headers' => $headers,
-            'query' => $params
+            'query' => $params,
         ];
 
         switch ($method) {

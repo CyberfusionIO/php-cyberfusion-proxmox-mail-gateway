@@ -5,6 +5,9 @@ stages:
 
 image: lorisleiva/laravel-docker:8.1
 
+cache:
+  key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+
 composer:
   stage: preparation
   before_script:
@@ -23,16 +26,13 @@ composer:
 
 phpunit:
   stage: testing
+  coverage: '/^\s*Lines:\s*(\d+\.\d+)\%/'
+  variables:
+    XDEBUG_MODE: coverage
   dependencies:
     - composer
   script:
-    - php -v
-    - php -d memory_limit=4G ./vendor/bin/phpunit --no-coverage
-  artifacts:
-    paths:
-      - ./storage/logs # for debugging
-    expire_in: 1 days
-    when: on_failure
+    - php -d memory_limit=4G ./vendor/bin/phpunit --coverage-text --colors=never
 
 phpstan:
   stage: analysis
@@ -44,3 +44,10 @@ phpstan:
   cache:
     paths:
       - vendor/
+
+pint:
+  stage: analysis
+  dependencies:
+    - composer
+  script:
+    - ./vendor/bin/pint

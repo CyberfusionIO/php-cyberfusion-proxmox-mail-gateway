@@ -1,6 +1,5 @@
 <?php
 
-
 namespace YWatchman\ProxmoxMGW\Result;
 
 use Illuminate\Contracts\Support\Arrayable;
@@ -8,8 +7,11 @@ use Illuminate\Contracts\Support\Arrayable;
 class Network implements Arrayable
 {
     protected int $size;
+
     protected string $comment;
+
     protected string $prefix;
+
     protected string $cidr;
 
     public function __construct(int $size, string $comment, string $prefix, string $cidr)

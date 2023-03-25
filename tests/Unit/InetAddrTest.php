@@ -1,8 +1,6 @@
 <?php
 
-
 namespace YWatchman\ProxmoxMGW\Tests\Unit;
-
 
 use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
 use YWatchman\ProxmoxMGW\Support\InetAddr;
@@ -10,7 +8,6 @@ use YWatchman\ProxmoxMGW\Tests\TestCase;
 
 class InetAddrTest extends TestCase
 {
-
     public function setUp(): void
     {
         parent::setUp();
@@ -24,7 +21,6 @@ class InetAddrTest extends TestCase
         $inetAddr = new InetAddr('2a0c:eb00:0:f7:185:233:172:16/128');
         $this->assertTrue($inetAddr->isCidr(false));
 
-
         $inetAddr = new InetAddr('185.233.172.16//32');
         $this->assertFalse($inetAddr->isCidr(false));
     }
@@ -35,5 +31,4 @@ class InetAddrTest extends TestCase
         $this->expectExceptionCode(InetAddrValidationException::CIDR_TOO_MANY_SLASHES);
         $inetAddr->isCidr();
     }
-
 }

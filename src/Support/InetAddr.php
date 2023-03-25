@@ -1,6 +1,5 @@
 <?php
 
-
 namespace YWatchman\ProxmoxMGW\Support;
 
 use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
@@ -8,7 +7,9 @@ use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
 class InetAddr
 {
     protected string $addr;
+
     protected string $prefix;
+
     protected ?int $netmask;
 
     public function __construct(string $addr, int $netmask = null)
@@ -17,7 +18,7 @@ class InetAddr
 
         try {
             if ($this->isCidr()) {
-                list($this->prefix, $this->netmask) = $this->getNetmaskAndPrefix();
+                [$this->prefix, $this->netmask] = $this->getNetmaskAndPrefix();
             }
         } catch (InetAddrValidationException) {
             $this->prefix = $addr;
