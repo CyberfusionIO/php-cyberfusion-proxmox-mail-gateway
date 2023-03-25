@@ -50,4 +50,4 @@ pint:
   dependencies:
     - composer
   script:
-    - ./vendor/bin/pint
+    - ./vendor/bin/pint --test
