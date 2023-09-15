@@ -1,10 +1,10 @@
 <?php
 
-namespace YWatchman\ProxmoxMGW\Tests\Unit;
+namespace Cyberfusion\ProxmoxMGW\Tests\Unit;
 
-use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
-use YWatchman\ProxmoxMGW\Support\InetAddr;
-use YWatchman\ProxmoxMGW\Tests\TestCase;
+use Cyberfusion\ProxmoxMGW\Exceptions\InetAddrValidationException;
+use Cyberfusion\ProxmoxMGW\Support\InetAddr;
+use Cyberfusion\ProxmoxMGW\Tests\TestCase;
 
 class InetAddrTest extends TestCase
 {

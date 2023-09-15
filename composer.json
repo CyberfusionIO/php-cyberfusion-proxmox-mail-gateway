@@ -20,19 +20,19 @@
     },
     "autoload": {
         "psr-4": {
-            "YWatchman\\ProxmoxMGW\\": "src/"
+            "Cyberfusion\\ProxmoxMGW\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "YWatchman\\ProxmoxMGW\\Tests\\": "tests/"
+            "Cyberfusion\\ProxmoxMGW\\Tests\\": "tests/"
         }
     },
     "license": "proprietary",
     "authors": [
         {
-            "name": "Yvan Watchman",
-            "email": "ywatchman@cyberfusion.nl"
+            "name": "Dick van der Heiden",
+            "email": "engineering@cyberfusion.nl"
         }
     ],
     "minimum-stability": "stable"

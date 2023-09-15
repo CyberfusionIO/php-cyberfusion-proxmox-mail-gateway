@@ -1,6 +1,6 @@
 <?php
 
-namespace YWatchman\ProxmoxMGW\Exceptions;
+namespace Cyberfusion\ProxmoxMGW\Exceptions;
 
 class InetAddrValidationException extends ProxmoxException
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace YWatchman\ProxmoxMGW\Support;
+namespace Cyberfusion\ProxmoxMGW\Support;
 
-use YWatchman\ProxmoxMGW\Exceptions\InetAddrValidationException;
+use Cyberfusion\ProxmoxMGW\Exceptions\InetAddrValidationException;
 
 class InetAddr
 {

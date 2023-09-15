@@ -1,6 +1,6 @@
 <?php
 
-namespace YWatchman\ProxmoxMGW\Tests;
+namespace Cyberfusion\ProxmoxMGW\Tests;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase as UnitTestCase;

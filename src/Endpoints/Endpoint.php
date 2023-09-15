@@ -1,15 +1,13 @@
 <?php
 
-namespace YWatchman\ProxmoxMGW\Endpoints;
+namespace Cyberfusion\ProxmoxMGW\Endpoints;
 
-use YWatchman\ProxmoxMGW\Client;
+use Cyberfusion\ProxmoxMGW\Client;
 
 abstract class Endpoint
 {
-    protected Client $client;
-
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
+    public function __construct(
+        protected Client $client
+    ) {
     }
 }
