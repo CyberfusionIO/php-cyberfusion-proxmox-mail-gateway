@@ -1,148 +1,62 @@
 <?php
 
-namespace YWatchman\ProxmoxMGW;
+namespace Cyberfusion\ProxmoxMGW;
 
+use Cyberfusion\ProxmoxMGW\Endpoints\Access\TicketEndpoint;
+use Cyberfusion\ProxmoxMGW\Exceptions\AuthenticationException;
+use Cyberfusion\ProxmoxMGW\Exceptions\InvalidRequestException;
+use Cyberfusion\ProxmoxMGW\Models\AuthenticationTicket;
+use Cyberfusion\ProxmoxMGW\Requests\TicketGetRequest;
+use Cyberfusion\ProxmoxMGW\Support\Result;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-use YWatchman\ProxmoxMGW\Exceptions\AuthenticationException;
-use YWatchman\ProxmoxMGW\Exceptions\InvalidRequestException;
-use YWatchman\ProxmoxMGW\Requests\Access;
 
 class Client
 {
-    /**
-     * PMG hostname
-     */
-    protected string $hostname;
-
-    /**
-     * PMG Port
-     */
-    protected int $port;
-
-    /**
-     * PMG username
-     */
-    protected string $username;
-
-    /**
-     * PMG Password
-     */
-    protected string $password;
-
-    /**
-     * Access request object for retrieving tokens etc.
-     */
-    protected ?Access $access = null;
-
-    /**
-     * Authentication realm
-     */
-    protected string $realm;
-
-    /**
-     * Login cookie from PMG
-     */
-    protected string $ticket = '';
-
-    /**
-     * Protection token retrieved from API
-     */
-    protected string $csrf = '';
-
-    /**
-     * Can be json or extjs
-     */
-    protected string $responseType = 'json';
-
-    protected Client $client;
+    protected ?AuthenticationTicket $authenticationTicket = null;
 
     protected HttpClient $httpClient;
 
-    /**
-     * Gateway constructor.
-     *
-     * @throws AuthenticationException
-     */
     public function __construct(
-        string $hostname,
-        string $username,
-        string $password,
-        string $realm = 'pam',
-        int $port = 8006,
-        string $userAgent = 'Cyberfusion-PMG-PHP/1.0'
+        private readonly string $hostname,
+        private readonly int $port = 8006,
+        private readonly string $userAgent = 'Cyberfusion-PMG-PHP/2.0'
     ) {
-        if (empty($username) || empty($password)) {
-            // Throw exception if username or password is empty
-            throw new AuthenticationException(
-                'Missing username or password',
-                AuthenticationException::AUTH_MISSING_CREDENTIALS
-            );
-        }
-        $this->hostname = $hostname;
-        $this->username = $username;
-        $this->password = $password;
-        $this->realm = $realm;
-        $this->port = $port;
-
         $this->httpClient = new HttpClient([
+            'connect_timeout' => 5,
+            'timeout' => 10,
             'headers' => [
-                'User-Agent' => $userAgent,
+                'User-Agent' => $this->userAgent,
             ],
         ]);
-        $this->client = $this;
     }
 
-    public function getTicket(): string
+    public function isAuthenticated(): bool
     {
-        return $this->ticket;
+        return $this->authenticationTicket !== null;
     }
 
-    protected function setTicket(string $ticket): void
+    /**
+     * @throws AuthenticationException
+     */
+    public function authenticate(string $username, string $password, string $realm = 'pam'): Result
     {
-        $this->ticket = $ticket;
-    }
+        $ticketEndpoint = new TicketEndpoint($this);
 
-    public function getCsrf(): string
-    {
-        return $this->csrf;
-    }
+        $result = $ticketEndpoint->get(new TicketGetRequest(
+            username: $username,
+            password: $password,
+            realm: $realm,
+        ));
+        if ($result->failed()) {
+            throw new AuthenticationException(message: $result->getMessage());
+        }
 
-    protected function setCsrf(string $csrf): void
-    {
-        $this->csrf = $csrf;
-    }
+        $this->authenticationTicket = $result->getData('authenticationTicket');
 
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function getRealm(): string
-    {
-        return $this->realm;
-    }
-
-    private function getAccess(): Access
-    {
-        // Set access and return it.
-        return $this->access ?: ($this->access = new Access($this->client));
-    }
-
-    public function setAccess(): void
-    {
-        $this->getAccess();
-        $this->access->getTicket();
-
-        $this->setTicket($this->access->ticket);
-        $this->setCsrf($this->access->csrf);
+        return $result;
     }
 
     /**
@@ -153,63 +67,45 @@ class Client
     public function makeRequest(string $endpoint, string $method = 'GET', array $params = []): ResponseInterface
     {
         // Get API url and append endpoint
-        $url = $this->getRequestUrl($endpoint);
+        $url = sprintf(
+            'https://%s:%d/api2/%s%s',
+            $this->hostname,
+            $this->port,
+            'json',
+            $endpoint
+        );
 
         // Initialise variables for later use
         $headers = null;
 
         $cookieJar = new CookieJar();
-        if (! empty($this->ticket)) {
+        if ($this->authenticationTicket !== null) {
             $cookieJar = CookieJar::fromArray(
-                [
-                    'PMGAuthCookie' => $this->ticket,
-                ],
-                $this->hostname
+                cookies: ['PMGAuthCookie' => $this->authenticationTicket->ticket],
+                domain: $this->hostname,
             );
 
-            $headers = ['CSRFPreventionToken' => $this->csrf];
+            $headers = ['CSRFPreventionToken' => $this->authenticationTicket->csrf];
         }
-
-        $params = array_filter($params, function ($value) {
-            return $value !== null;
-        });
 
         $options = [
             'verify' => false, // Todo: check debug
             'exceptions' => false,
             'cookies' => $cookieJar,
             'headers' => $headers,
-            'query' => $params,
+            'query' => array_filter($params, fn ($value) => $value !== null),
         ];
 
-        switch ($method) {
-            case 'GET':
-                return $this->httpClient->get($url, $options);
-            case 'POST':
-                return $this->httpClient->post($url, $options);
-            case 'PUT':
-                return $this->httpClient->put($url, $options);
-            case 'DELETE':
-                return $this->httpClient->delete($url, $options);
-        }
-
-        throw new InvalidRequestException(
-            'Request method is not implemented (yet).',
-            InvalidRequestException::GATEWAY_METHOD_NOT_IMPLEMENTED
-        );
-    }
-
-    /**
-     * Get API url.
-     */
-    protected function getRequestUrl(string $endpoint): string
-    {
-        return sprintf(
-            'https://%s:%d/api2/%s%s',
-            $this->hostname,
-            $this->port,
-            $this->responseType,
-            $endpoint
-        );
+        // Execute the request
+        return match ($method) {
+            'GET' => $this->httpClient->get($url, $options),
+            'POST' => $this->httpClient->post($url, $options),
+            'PUT' => $this->httpClient->put($url, $options),
+            'DELETE' => $this->httpClient->delete($url, $options),
+            default => throw new InvalidRequestException(
+                'Request method is not implemented (yet).',
+                InvalidRequestException::GATEWAY_METHOD_NOT_IMPLEMENTED
+            ),
+        };
     }
 }

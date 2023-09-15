@@ -9,12 +9,26 @@ Documentation: https://pmg.proxmox.com/pmg-docs/api-viewer/index.html
 ## Example
 
 ```php
-use YWatchman\ProxmoxMGW\Client;
-use YWatchman\ProxmoxMGW\Endpoints\NetworkEndpoint;
+use Cyberfusion\ProxmoxMGW\Client;
+use Cyberfusion\ProxmoxMGW\Endpoints\Config\DkimEndpoint;
+use Cyberfusion\ProxmoxMGW\Exceptions\AuthenticationException;
+use Cyberfusion\ProxmoxMGW\Models\DkimDomainData;
+use Cyberfusion\ProxmoxMGW\Requests\DkimGetRequest;
 
-$client = new Client('pmgtest.cyberfusion.nl', 'apiuser', 'Super secret password.');
-$client->setAccess();
+try {
+    $client = new Client('pmgtest.cyberfusion.nl');
+    $client->authenticate('apiuser', 'Super secret password.');
+} catch (AuthenticationException $e) {
+    // Handle authentication error
+}
 
-$endpoint = new NetworkEndpoint($client);
-$network = $endpoint->getNetworks();
+$dkimEndpoint = new DkimEndpoint($client);
+$result = $dkimEndpoint->get(new DkimGetRequest('example.com'));
+if ($result->failed()) {
+    // Handle error
+}
+
+/** @var DkimDomainData $dkim */
+$dkim = $result->getData('dkim');
+// $dkim->domain -> example.com
 ```
