@@ -8,7 +8,7 @@ class Network
         public int $size,
         public string $comment,
         public string $prefix,
-        public string $cidr
+        public string $cidr,
     ) {
     }
 }

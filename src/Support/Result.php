@@ -7,7 +7,7 @@ class Result
     public function __construct(
         private readonly bool $success = false,
         private readonly string $message = '',
-        private array $data = []
+        private array $data = [],
     ) {
     }
 

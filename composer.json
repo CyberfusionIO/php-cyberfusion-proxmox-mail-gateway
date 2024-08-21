@@ -10,20 +10,17 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
+        "php": "^8.3",
         "ext-json": "*",
         "lib-curl": "*",
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/support": "^9.0|^10.0",
-        "laravel/pint": "^1.7"
+        "illuminate/support": "^10.0|^11.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.4",
-        "phpstan/phpstan": "^1.2",
-        "phpunit/phpunit": "^10.0"
-    },
-    "config": {
-        "sort-packages": true
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.1|^11.0",
+        "symplify/easy-coding-standard": "^12.0"
     },
     "autoload": {
         "psr-4": {
@@ -34,6 +31,9 @@
         "psr-4": {
             "Cyberfusion\\ProxmoxMGW\\Tests\\": "tests/"
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "scripts": {
         "test": [

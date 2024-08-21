@@ -22,7 +22,7 @@ class Client
     public function __construct(
         private readonly string $hostname,
         private readonly int $port = 8006,
-        private readonly string $userAgent = 'Cyberfusion-PMG-PHP/2.0'
+        private readonly string $userAgent = 'Cyberfusion-PMG-PHP/2.0',
     ) {
         $this->httpClient = new HttpClient([
             'connect_timeout' => 5,
@@ -72,7 +72,7 @@ class Client
             $this->hostname,
             $this->port,
             'json',
-            $endpoint
+            $endpoint,
         );
 
         // Initialise variables for later use
@@ -93,7 +93,7 @@ class Client
             'exceptions' => false,
             'cookies' => $cookieJar,
             'headers' => $headers,
-            'query' => array_filter($params, fn ($value) => $value !== null),
+            'query' => array_filter($params, fn($value) => $value !== null),
         ];
 
         // Execute the request
@@ -104,7 +104,7 @@ class Client
             'DELETE' => $this->httpClient->delete($url, $options),
             default => throw new InvalidRequestException(
                 'Request method is not implemented (yet).',
-                InvalidRequestException::GATEWAY_METHOD_NOT_IMPLEMENTED
+                InvalidRequestException::GATEWAY_METHOD_NOT_IMPLEMENTED,
             ),
         };
     }

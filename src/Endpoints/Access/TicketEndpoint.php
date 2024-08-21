@@ -23,14 +23,14 @@ class TicketEndpoint extends Endpoint
                         'username' => $request->username,
                         'password' => $request->password,
                         'realm' => $request->realm,
-                    ]
+                    ],
                 );
 
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (Throwable $exception) {
             return new Result(
                 success: false,
-                message: $exception->getMessage()
+                message: $exception->getMessage(),
             );
         }
 
@@ -43,7 +43,7 @@ class TicketEndpoint extends Endpoint
                     role: Arr::get($data, 'data.role'),
                     csrf: Arr::get($data, 'data.CSRFPreventionToken'),
                 ),
-            ]
+            ],
         );
     }
 }
