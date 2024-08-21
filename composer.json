@@ -1,16 +1,13 @@
 {
     "name": "cyberfusion/proxmox-mail-gateway",
-    "license": "MIT",
-    "description": "PHP client for Proxmox Mail Gateway API",
+    "description": "Library for Proxmox Mail Gateway.",
     "type": "library",
-    "authors": [
-        {
-            "name": "Dick van der Heiden",
-            "email": "dick@goedemiddag.nl",
-            "role": "Developer"
-        }
-    ],
-    "minimum-stability": "stable",
+    "license": "MIT",
+    "support": {
+        "security": "https://cyberfusion.io/content/responsible-disclosure-policy",
+        "email": "support@cyberfusion.io"
+    },
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
         "php": "^8.3",
@@ -25,6 +22,9 @@
         "phpunit/phpunit": "^10.1|^11.0",
         "symplify/easy-coding-standard": "^12.0"
     },
+    "config": {
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
             "Cyberfusion\\ProxmoxMGW\\": "src/"
@@ -34,9 +34,6 @@
         "psr-4": {
             "Cyberfusion\\ProxmoxMGW\\Tests\\": "tests/"
         }
-    },
-    "config": {
-        "sort-packages": true
     },
     "scripts": {
         "test": [

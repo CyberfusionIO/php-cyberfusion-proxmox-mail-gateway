@@ -1,10 +1,16 @@
-# Proxmox mail gateway
+# php-cyberfusion-proxmox-mail-gateway
 
+Library for [Proxmox Mail Gateway](https://www.proxmox.com/en/proxmox-mail-gateway/overview).
 
+Proxmox Mail Gateway API documentation: https://pmg.proxmox.com/pmg-docs/api-viewer/index.html
 
-PHP client for Proxmox Mail Gateway API.
+# Install
 
-Documentation: https://pmg.proxmox.com/pmg-docs/api-viewer/index.html
+## Composer
+
+Run the following command to install the package from Packagist:
+
+    composer require cyberfusion/proxmox-mail-gateway
 
 # Usage
 
