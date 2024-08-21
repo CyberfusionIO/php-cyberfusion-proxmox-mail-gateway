@@ -6,3 +6,6 @@ build/
 composer.lock
 .phpunit.cache
 .phpactor.json
+.phpunit.cache
+.DS_Store
+.cache
