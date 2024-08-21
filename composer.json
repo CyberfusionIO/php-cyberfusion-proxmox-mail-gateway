@@ -33,6 +33,18 @@
             "Cyberfusion\\ProxmoxMGW\\Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "test": [
+            "@analyze",
+            "@test:no-coverage",
+            "@lint:check"
+        ],
+        "test:coverage": "vendor/bin/phpunit",
+        "test:no-coverage": "vendor/bin/phpunit --no-coverage",
+        "analyze": "vendor/bin/phpstan analyse",
+        "lint:check": "vendor/bin/ecs",
+        "lint:fix": "vendor/bin/ecs --fix"
+    },
     "minimum-stability": "stable",
     "prefer-stable": true
 }
