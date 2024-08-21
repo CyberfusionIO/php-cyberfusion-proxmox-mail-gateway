@@ -3,52 +3,8 @@ stages:
   - testing
   - analysis
 
-image: lorisleiva/laravel-docker:8.3
-
-cache:
-  key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
-
-composer:
-  stage: preparation
-  before_script:
-    - composer config --auth http-basic.vcs.cyberfusion.nl "gitlab-ci-token" "$CI_JOB_TOKEN" --no-ansi --no-interaction
-  script:
-    - composer --version
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-  artifacts:
-    paths:
-      - vendor/
-    expire_in: 1 days
-    when: always
-  cache:
-    paths:
-      - vendor/
-
-phpunit:
-  stage: testing
-  coverage: '/^\s*Lines:\s*(\d+\.\d+)\%/'
-  variables:
-    XDEBUG_MODE: coverage
-  dependencies:
-    - composer
-  script:
-    - php -d memory_limit=4G ./vendor/bin/phpunit --coverage-text --colors=never
-
-phpstan:
-  stage: analysis
-  dependencies:
-    - composer
-  script:
-    - ./vendor/bin/phpstan --version
-    - php -d memory_limit=4G ./vendor/bin/phpstan analyse -v --no-ansi --no-interaction
-  cache:
-    paths:
-      - vendor/
-
-ecs:
-  stage: analysis
-  allow_failure: true
-  dependencies:
-    - composer
-  script:
-    - ./vendor/bin/ecs --output-format=gitlab
+include:
+  - project: 'shared/gitlab-ci-includes'
+    ref: main
+    file:
+      - '/php.yml'
