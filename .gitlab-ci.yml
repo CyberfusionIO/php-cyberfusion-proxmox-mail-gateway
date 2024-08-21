@@ -3,7 +3,7 @@ stages:
   - testing
   - analysis
 
-image: lorisleiva/laravel-docker:8.1
+image: lorisleiva/laravel-docker:8.3
 
 cache:
   key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
