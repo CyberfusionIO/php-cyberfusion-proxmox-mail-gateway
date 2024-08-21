@@ -45,7 +45,7 @@ class InetAddr
         if ($exceptions) {
             throw new InetAddrValidationException(
                 'Invalid address, too many slashes.',
-                InetAddrValidationException::CIDR_TOO_MANY_SLASHES
+                InetAddrValidationException::CIDR_TOO_MANY_SLASHES,
             );
         }
 
@@ -78,7 +78,7 @@ class InetAddr
         if ($this->netmask < 0 || $this->netmask > 128) {
             throw new InetAddrValidationException(
                 'Invalid Cidr.',
-                InetAddrValidationException::CIDR_INVALID
+                InetAddrValidationException::CIDR_INVALID,
             );
         }
 
@@ -92,7 +92,7 @@ class InetAddr
 
         throw new InetAddrValidationException(
             'Could not find a valid IPv4 or IPv6 Address.',
-            InetAddrValidationException::CIDR_CANNOT_FIND_ADDRESS
+            InetAddrValidationException::CIDR_CANNOT_FIND_ADDRESS,
         );
     }
 }

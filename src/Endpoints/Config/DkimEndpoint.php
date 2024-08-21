@@ -23,7 +23,7 @@ class DkimEndpoint extends Endpoint
                     endpoint: '/config/dkim/domains',
                     params: [
                         'domain' => $request->domain,
-                    ]
+                    ],
                 );
 
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -41,7 +41,7 @@ class DkimEndpoint extends Endpoint
                     domain: Arr::get($data, 'data.domain'),
                     comment: Arr::get($data, 'data.comment'),
                 ),
-            ]
+            ],
         );
     }
 
@@ -56,12 +56,12 @@ class DkimEndpoint extends Endpoint
                     params: [
                         'domain' => $request->domain,
                         'comment' => $request->comment,
-                    ]
+                    ],
                 );
         } catch (Throwable $exception) {
             return new Result(
                 success: false,
-                message: $exception->getMessage()
+                message: $exception->getMessage(),
             );
         }
 
@@ -79,12 +79,12 @@ class DkimEndpoint extends Endpoint
                     params: [
                         'domain' => $request->domain,
                         'comment' => $request->comment,
-                    ]
+                    ],
                 );
         } catch (Throwable $exception) {
             return new Result(
                 success: false,
-                message: $exception->getMessage()
+                message: $exception->getMessage(),
             );
         }
 
@@ -98,7 +98,7 @@ class DkimEndpoint extends Endpoint
                 ->client
                 ->makeRequest(
                     endpoint: sprintf('/config/dkim/domains/%s', $request->domain),
-                    method: 'DELETE'
+                    method: 'DELETE',
                 );
         } catch (Throwable $exception) {
             return new Result(
