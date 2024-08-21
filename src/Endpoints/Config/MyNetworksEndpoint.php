@@ -19,7 +19,7 @@ class MyNetworksEndpoint extends Endpoint
             $response = $this
                 ->client
                 ->makeRequest(
-                    endpoint: '/config/mynetworks'
+                    endpoint: '/config/mynetworks',
                 );
 
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -44,7 +44,7 @@ class MyNetworksEndpoint extends Endpoint
             success: true,
             data: [
                 'networks' => $networks,
-            ]
+            ],
         );
     }
 
@@ -68,7 +68,7 @@ class MyNetworksEndpoint extends Endpoint
                     params: [
                         'cidr' => $request->cidr,
                         'comment' => $request->comment,
-                    ]
+                    ],
                 );
         } catch (Throwable $exception) {
             return new Result(
@@ -87,7 +87,7 @@ class MyNetworksEndpoint extends Endpoint
         } catch (Throwable $exception) {
             return new Result(
                 success: false,
-                message: $exception->getMessage()
+                message: $exception->getMessage(),
             );
         }
 

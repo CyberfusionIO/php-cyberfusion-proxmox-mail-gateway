@@ -5,3 +5,4 @@ build/
 .phpunit.result.cache
 composer.lock
 .phpunit.cache
+.phpactor.json

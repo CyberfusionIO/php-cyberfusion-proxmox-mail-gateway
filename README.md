@@ -1,4 +1,6 @@
-# proxmox-mail-gateway
+# Proxmox mail gateway
+
+
 
 PHP client for Proxmox Mail Gateway API.
 
