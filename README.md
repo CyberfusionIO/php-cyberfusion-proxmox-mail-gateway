@@ -40,3 +40,4 @@ if ($result->failed()) {
 $dkim = $result->getData('dkim');
 // $dkim->domain -> example.com
 ```
+
