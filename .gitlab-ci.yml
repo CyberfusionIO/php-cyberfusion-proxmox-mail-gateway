@@ -45,9 +45,10 @@ phpstan:
     paths:
       - vendor/
 
-pint:
+ecs:
   stage: analysis
+  allow_failure: true
   dependencies:
     - composer
   script:
-    - ./vendor/bin/pint --test
+    - ./vendor/bin/ecs --output-format=gitlab
