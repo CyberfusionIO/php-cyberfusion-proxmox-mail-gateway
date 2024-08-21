@@ -1,6 +1,6 @@
 {
     "name": "cyberfusion/proxmox-mail-gateway",
-    "description": "PHP client for Proxmox Mail Gateway API",
+    "description": "Library for Proxmox Mail Gateway.",
     "type": "library",
     "require": {
         "php": ">=8.1",
