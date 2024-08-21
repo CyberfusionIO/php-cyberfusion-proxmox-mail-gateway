@@ -29,11 +29,9 @@
         }
     },
     "license": "proprietary",
-    "authors": [
-        {
-            "name": "Dick van der Heiden",
-            "email": "engineering@cyberfusion.nl"
-        }
-    ],
+    "support": {
+        "security": "https://cyberfusion.io/content/responsible-disclosure-policy",
+        "email": "support@cyberfusion.io"
+    },
     "minimum-stability": "stable"
 }
