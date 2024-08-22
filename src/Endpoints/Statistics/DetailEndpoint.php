@@ -2,13 +2,14 @@
 
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Statistics;
 
+use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
 use Cyberfusion\ProxmoxMGW\Models\StatisticsDetail;
 use Cyberfusion\ProxmoxMGW\Requests\StatisticsDetailRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;
 
-class DetailEndpoint {
+class DetailEndpoint extends Endpoint {
 		public function get( StatisticsDetailRequest $request ): Result {
 				try {
 						$response = $this->client->makeRequest(
