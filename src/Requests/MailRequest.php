@@ -5,8 +5,7 @@ namespace Cyberfusion\ProxmoxMGW\Requests;
 /**
  * Request class for fetching general mail statistics.
  */
-class MailRequest
-{
+class MailRequest {
 		/**
 		 * @param int|null $day Day of month. Get statistics for a single day. (1-31)
 		 * @param int|null $endtime Only consider entries older than 'endtime' (unix epoch). This is set to '<start> + 1day' by default.
@@ -20,5 +19,6 @@ class MailRequest
 				public ?int $month = null,
 				public ?int $starttime = null,
 				public ?int $year = null
-		) {}
+		) {
+		}
 }

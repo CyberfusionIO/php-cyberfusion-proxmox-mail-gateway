@@ -2,15 +2,15 @@
 
 namespace Cyberfusion\ProxmoxMGW\Requests;
 
-class ContactRequest
-{
+class ContactRequest {
 		public function __construct(
-				public ?int $day = null,
-				public ?int $endtime = null,
+				public ?int    $day = null,
+				public ?int    $endtime = null,
 				public ?string $filter = null,
-				public ?int $month = null,
+				public ?int    $month = null,
 				public ?string $orderby = null,
-				public ?int $starttime = null,
-				public ?int $year = null
-		) {}
+				public ?int    $starttime = null,
+				public ?int    $year = null
+		) {
+		}
 }

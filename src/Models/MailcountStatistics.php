@@ -5,8 +5,7 @@ namespace Cyberfusion\ProxmoxMGW\Models;
 /**
  * Model representing mail count statistics.
  */
-class MailcountStatistics
-{
+class MailcountStatistics {
 		/**
 		 * @param int $bounces_in Incoming bounce mail count (sender = <>).
 		 * @param int $bounces_out Outgoing bounce mail count (sender = <>).
@@ -36,5 +35,6 @@ class MailcountStatistics
 				public int $time,
 				public int $viruscount_in,
 				public int $viruscount_out
-		) {}
+		) {
+		}
 }

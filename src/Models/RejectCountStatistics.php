@@ -5,8 +5,7 @@ namespace Cyberfusion\ProxmoxMGW\Models;
 /**
  * Model representing early SMTP reject count statistics.
  */
-class RejectCountStatistics
-{
+class RejectCountStatistics {
 		/**
 		 * @param int $index Time index.
 		 * @param int $pregreet_rejects PREGREET reject count.
@@ -18,5 +17,6 @@ class RejectCountStatistics
 				public int $pregreet_rejects,
 				public int $rbl_rejects,
 				public int $time
-		) {}
+		) {
+		}
 }

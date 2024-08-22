@@ -5,8 +5,7 @@ namespace Cyberfusion\ProxmoxMGW\Models;
 /**
  * Model representing general mail statistics.
  */
-class MailStatistics
-{
+class MailStatistics {
 		/**
 		 * @param float $avptime Average mail processing time in seconds.
 		 * @param int $bounces_in Incoming bounce mail count (sender = <>).
@@ -29,22 +28,23 @@ class MailStatistics
 		 */
 		public function __construct(
 				public float $avptime,
-				public int $bounces_in,
-				public int $bounces_out,
-				public int $bytes_in,
-				public int $bytes_out,
-				public int $count,
-				public int $count_in,
-				public int $count_out,
-				public int $glcount,
-				public int $junk_in,
-				public int $junk_out,
-				public int $pregreet_rejects,
-				public int $rbl_rejects,
-				public int $spamcount_in,
-				public int $spamcount_out,
-				public int $spfcount,
-				public int $viruscount_in,
-				public int $viruscount_out
-		) {}
+				public int   $bounces_in,
+				public int   $bounces_out,
+				public int   $bytes_in,
+				public int   $bytes_out,
+				public int   $count,
+				public int   $count_in,
+				public int   $count_out,
+				public int   $glcount,
+				public int   $junk_in,
+				public int   $junk_out,
+				public int   $pregreet_rejects,
+				public int   $rbl_rejects,
+				public int   $spamcount_in,
+				public int   $spamcount_out,
+				public int   $spfcount,
+				public int   $viruscount_in,
+				public int   $viruscount_out
+		) {
+		}
 }
