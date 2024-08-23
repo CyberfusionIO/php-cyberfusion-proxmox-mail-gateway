@@ -3,7 +3,7 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Who;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Who\ObjectDeleteRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Who\ObjectDeleteRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Throwable;
 

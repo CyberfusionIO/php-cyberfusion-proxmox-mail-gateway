@@ -3,10 +3,10 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Who;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\Who\EmailObject;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Who\EmailCreateRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Who\EmailGetRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Who\EmailUpdateRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\Who\EmailObject;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Who\EmailCreateRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Who\EmailGetRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Who\EmailUpdateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

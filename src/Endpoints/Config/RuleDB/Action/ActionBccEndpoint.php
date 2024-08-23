@@ -3,7 +3,7 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Action;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\CreateBccActionRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Action\CreateBccActionRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Throwable;
 

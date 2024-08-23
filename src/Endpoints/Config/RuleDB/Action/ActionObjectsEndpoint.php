@@ -3,8 +3,8 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Action;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\Action\ActionObject;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\DeleteActionObjectRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\Action\ActionObject;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Action\DeleteActionObjectRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

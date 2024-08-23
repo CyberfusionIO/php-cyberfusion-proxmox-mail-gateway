@@ -3,12 +3,12 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\When\WhenGroup;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\CreateWhenGroupRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\GetWhenGroupConfigRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\ListWhenGroupObjectsRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\ListWhenGroupsRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\SetWhenGroupConfigRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\When\WhenGroup;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\CreateWhenGroupRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\GetWhenGroupConfigRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\ListWhenGroupObjectsRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\ListWhenGroupsRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\SetWhenGroupConfigRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

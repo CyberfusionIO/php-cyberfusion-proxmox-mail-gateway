@@ -3,10 +3,10 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Action;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\Action\Field;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\FieldCreateRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\FieldGetRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\FieldUpdateRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\Action\Field;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Action\FieldCreateRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Action\FieldGetRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Action\FieldUpdateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

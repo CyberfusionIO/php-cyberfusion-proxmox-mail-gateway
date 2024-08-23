@@ -3,11 +3,11 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\When;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\When\Timeframe;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\TimeframeCreateRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\TimeframeDeleteRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\TimeframeGetRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\When\TimeframeUpdateRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\When\Timeframe;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\TimeframeCreateRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\TimeframeDeleteRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\TimeframeGetRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\When\TimeframeUpdateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

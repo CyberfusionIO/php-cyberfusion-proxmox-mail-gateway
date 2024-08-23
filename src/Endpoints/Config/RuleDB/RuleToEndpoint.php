@@ -3,9 +3,9 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\RuleToGroup;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\AddRuleToGroupRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\GetRuleToRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\RuleToGroup;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\AddRuleToGroupRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\GetRuleToRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

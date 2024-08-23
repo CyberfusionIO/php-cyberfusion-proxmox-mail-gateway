@@ -3,11 +3,11 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\WhoGroup;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\CreateWhoGroupRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\GetWhoGroupConfigRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\ListWhoGroupObjectsRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\SetWhoGroupConfigRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\WhoGroup;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\CreateWhoGroupRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\GetWhoGroupConfigRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\ListWhoGroupObjectsRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\SetWhoGroupConfigRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

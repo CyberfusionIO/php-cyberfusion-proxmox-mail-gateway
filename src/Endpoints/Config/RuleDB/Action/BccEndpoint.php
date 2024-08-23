@@ -3,9 +3,9 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Action;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\Action\Bcc;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\BccGetRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\BccUpdateRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\Action\Bcc;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Action\BccGetRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Action\BccUpdateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

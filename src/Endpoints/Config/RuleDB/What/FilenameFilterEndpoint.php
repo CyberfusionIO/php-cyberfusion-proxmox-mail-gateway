@@ -3,10 +3,10 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\What;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\What\FilenameFilter;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\FilenameFilterCreateRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\FilenameFilterGetRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\FilenameFilterUpdateRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\What\FilenameFilter;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\What\FilenameFilterCreateRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\What\FilenameFilterGetRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\What\FilenameFilterUpdateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

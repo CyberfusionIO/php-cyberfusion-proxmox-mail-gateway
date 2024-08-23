@@ -3,7 +3,7 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\What;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\VirusFilterCreateRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\What\VirusFilterCreateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;
