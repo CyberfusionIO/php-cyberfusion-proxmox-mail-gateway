@@ -1,11 +1,11 @@
 <?php
 
-namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDb;
+namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
 use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\FromGroup;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\GetRuleFromRequest;
 use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\AddRuleFromGroupRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\GetRuleFromRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

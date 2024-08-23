@@ -1,28 +1,28 @@
 <?php
 
-namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDb\Action;
+namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\Action\Bcc;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\BccGetRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Action\BccUpdateRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\RuleConfig;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\RuleConfigGetRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\RuleConfigUpdateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;
 
-class BccEndpoint extends Endpoint
+class RuleConfigEndpoint extends Endpoint
 {
     /**
-     * Read 'BCC' object settings.
+     * Get common rule properties.
      *
-     * @param BccGetRequest $request
+     * @param RuleConfigGetRequest $request
      * @return Result
      */
-    public function get(BccGetRequest $request): Result
+    public function get(RuleConfigGetRequest $request): Result
     {
         try {
             $response = $this->client->makeRequest(
-                endpoint: sprintf('/config/ruledb/action/bcc/%s', $request->id),
+                endpoint: sprintf('/config/ruledb/rules/%d/config', $request->id),
                 method: 'GET',
             );
 
@@ -37,24 +37,28 @@ class BccEndpoint extends Endpoint
         return new Result(
             success: true,
             data: [
-                'bcc' => new Bcc(
+                'ruleConfig' => new RuleConfig(
+                    active: Arr::get($data, 'active'),
+                    direction: Arr::get($data, 'direction'),
                     id: Arr::get($data, 'id'),
+                    name: Arr::get($data, 'name'),
+                    priority: Arr::get($data, 'priority'),
                 ),
             ],
         );
     }
 
     /**
-     * Update 'BCC' object.
+     * Set rule properties.
      *
-     * @param BccUpdateRequest $request
+     * @param RuleConfigUpdateRequest $request
      * @return Result
      */
-    public function update(BccUpdateRequest $request): Result
+    public function update(RuleConfigUpdateRequest $request): Result
     {
         try {
             $this->client->makeRequest(
-                endpoint: sprintf('/config/ruledb/action/bcc/%s', $request->id),
+                endpoint: sprintf('/config/ruledb/rules/%d/config', $request->id),
                 method: 'PUT',
                 params: $request->toArray(),
             );

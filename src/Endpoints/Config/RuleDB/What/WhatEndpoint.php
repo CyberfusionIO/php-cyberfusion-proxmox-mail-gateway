@@ -1,13 +1,13 @@
 <?php
 
-namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDb\What;
+namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\What;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\DeleteObjectRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\What\ContentType;
 use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\ContentTypeCreateRequest;
 use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\ContentTypeGetRequest;
 use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\ContentTypeUpdateRequest;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\What\ContentType;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\DeleteObjectRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;

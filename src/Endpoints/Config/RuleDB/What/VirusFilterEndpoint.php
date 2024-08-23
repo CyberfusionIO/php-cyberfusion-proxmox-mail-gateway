@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDb\What;
+namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\What;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
 use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\What\VirusFilterCreateRequest;

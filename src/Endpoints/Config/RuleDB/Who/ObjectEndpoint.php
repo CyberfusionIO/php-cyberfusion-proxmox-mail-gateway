@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDb\Who;
+namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Who;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
 use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\Who\ObjectDeleteRequest;

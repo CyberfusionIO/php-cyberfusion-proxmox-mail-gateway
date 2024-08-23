@@ -1,28 +1,28 @@
 <?php
 
-namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDb;
+namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\RuleToGroup;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\GetRuleToRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\AddRuleToGroupRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\RuleWhatGroup;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\RuleWhatAddRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDb\RuleWhatGetRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;
 
-class RuleToEndpoint extends Endpoint
+class RuleWhatEndpoint extends Endpoint
 {
     /**
-     * Get 'to' group list.
+     * Get 'what' group list.
      *
-     * @param GetRuleToRequest $request
+     * @param RuleWhatGetRequest $request
      * @return Result
      */
-    public function get(GetRuleToRequest $request): Result
+    public function get(RuleWhatGetRequest $request): Result
     {
         try {
             $response = $this->client->makeRequest(
-                endpoint: sprintf('/config/ruledb/rules/%d/to', $request->id),
+                endpoint: sprintf('/config/ruledb/rules/%d/what', $request->id),
                 method: 'GET',
             );
 
@@ -34,9 +34,9 @@ class RuleToEndpoint extends Endpoint
             );
         }
 
-        $groups = collect();
+        $whatGroups = collect();
         foreach (Arr::get($data, 'data', []) as $group) {
-            $groups->push(new RuleToGroup(
+            $whatGroups->push(new RuleWhatGroup(
                 id: Arr::get($group, 'id'),
             ));
         }
@@ -44,22 +44,22 @@ class RuleToEndpoint extends Endpoint
         return new Result(
             success: true,
             data: [
-                'groups' => $groups,
+                'whatGroups' => $whatGroups,
             ],
         );
     }
 
     /**
-     * Add group to 'to' list.
+     * Add group to 'what' list.
      *
-     * @param AddRuleToGroupRequest $request
+     * @param RuleWhatAddRequest $request
      * @return Result
      */
-    public function addGroup(AddRuleToGroupRequest $request): Result
+    public function add(RuleWhatAddRequest $request): Result
     {
         try {
             $this->client->makeRequest(
-                endpoint: sprintf('/config/ruledb/rules/%d/to', $request->id),
+                endpoint: sprintf('/config/ruledb/rules/%d/what', $request->id),
                 method: 'POST',
                 params: [
                     'ogroup' => $request->ogroup,

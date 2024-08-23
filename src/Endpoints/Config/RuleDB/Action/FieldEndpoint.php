@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDb\Action;
+namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Action;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
 use Cyberfusion\ProxmoxMGW\Models\Config\RuleDb\Action\Field;

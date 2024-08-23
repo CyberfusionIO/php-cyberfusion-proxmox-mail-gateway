@@ -1,13 +1,13 @@
 <?php
 
-namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\Ruledb;
+namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
 use Cyberfusion\ProxmoxMGW\Models\Config\Ruledb\ActionGroup;
-use Cyberfusion\ProxmoxMGW\Requests\Config\Ruledb\DeleteWhatGroupRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\Ruledb\GetActionRequest;
 use Cyberfusion\ProxmoxMGW\Requests\Config\Ruledb\AddActionGroupRequest;
 use Cyberfusion\ProxmoxMGW\Requests\Config\Ruledb\DeleteActionGroupRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\Ruledb\DeleteWhatGroupRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\Ruledb\GetActionRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;
