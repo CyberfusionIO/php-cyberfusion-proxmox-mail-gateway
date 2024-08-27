@@ -2,15 +2,13 @@
 
 namespace Cyberfusion\ProxmoxMGW\Models;
 
-class DkimDomain
+class TlsInboundDomain
 {
     /**
-     * @param string $domain Domain name.
-     * @param string|null $comment Comment.
+     * @param string $domain Domain for which TLS should be enforced on incoming connections
      */
     public function __construct(
         public string $domain,
-        public ?string $comment = null,
     ) {
     }
 }
