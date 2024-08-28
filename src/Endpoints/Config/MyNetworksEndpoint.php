@@ -3,10 +3,9 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Config\MyNetworkData;
-use Cyberfusion\ProxmoxMGW\Requests\Config\MyNetworkDeleteRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\MyNetworkGetRequest;
-use Cyberfusion\ProxmoxMGW\Requests\Config\MyNetworkUpdateRequest;
+use Cyberfusion\ProxmoxMGW\Models\TrustedNetwork;
+use Cyberfusion\ProxmoxMGW\Requests\MyNetworksListRequest;
+use Cyberfusion\ProxmoxMGW\Requests\MyNetworksCreateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;
@@ -14,73 +13,62 @@ use Throwable;
 class MyNetworksEndpoint extends Endpoint
 {
     /**
-     * Delete a trusted network.
+     * List of trusted networks from where SMTP clients are allowed to relay mail through Proxmox Mail Gateway.
      *
-     * @param MyNetworkDeleteRequest $request
+     * @param MyNetworksListRequest $request
      * @return Result
      */
-    public function delete(MyNetworkDeleteRequest $request): Result
-    {
-        try {
-            $this->client->makeRequest(
-                endpoint: sprintf('/config/mynetworks/%s', $request->cidr),
-                method: 'DELETE',
-            );
-        } catch (Throwable $exception) {
-            return new Result(success: false, message: $exception->getMessage());
-        }
-
-        return new Result(success: true);
-    }
-
-    /**
-     * Read trusted network data (comment).
-     *
-     * @param MyNetworkGetRequest $request
-     * @return Result
-     */
-    public function get(MyNetworkGetRequest $request): Result
+    public function list(MyNetworksListRequest $request): Result
     {
         try {
             $response = $this->client->makeRequest(
-                endpoint: sprintf('/config/mynetworks/%s', $request->cidr),
+                endpoint: '/config/mynetworks',
                 method: 'GET',
+                params: $request->toArray(),
             );
 
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (Throwable $exception) {
-            return new Result(success: false, message: $exception->getMessage());
+            return new Result(
+                success: false,
+                message: $exception->getMessage(),
+            );
+        }
+
+        $trustedNetworks = collect();
+        foreach (Arr::get($data, 'data', []) as $item) {
+            $trustedNetworks->push(new TrustedNetwork(
+                cidr: Arr::get($item, 'cidr'),
+            ));
         }
 
         return new Result(
             success: true,
             data: [
-                'myNetworkData' => new MyNetworkData(
-                    cidr: Arr::get($data, 'cidr'),
-                    comment: Arr::get($data, 'comment'),
-                ),
+                'trustedNetworks' => $trustedNetworks,
             ],
         );
     }
 
     /**
-     * Update trusted data (comment).
+     * Add a trusted network.
      *
-     * @param MyNetworkUpdateRequest $request
+     * @param MyNetworksCreateRequest $request
      * @return Result
      */
-    public function update(MyNetworkUpdateRequest $request): Result
+    public function create(MyNetworksCreateRequest $request): Result
     {
         try {
             $this->client->makeRequest(
-                endpoint: sprintf('/config/mynetworks/%s', $request->cidr),
-                method: 'PUT',
-                params: [
-                    'comment' => $request->comment,
-                ],
+                endpoint: '/config/mynetworks',
+                method: 'POST',
+                params: $request->toArray(),
             );
         } catch (Throwable $exception) {
-            return new Result(success: false, message: $exception->getMessage());
+            return new Result(
+                success: false,
+                message: $exception->getMessage(),
+            );
         }
 
         return new Result(success: true);
