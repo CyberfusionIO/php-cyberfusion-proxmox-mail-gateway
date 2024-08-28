@@ -3,30 +3,25 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Nodes;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Models\Nodes\QshapeResult;
-use Cyberfusion\ProxmoxMGW\Requests\Nodes\PostfixQshapeRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Nodes\DiscardVerifyCacheRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
-use Illuminate\Support\Arr;
 use Throwable;
 
 class PostfixEndpoint extends Endpoint
 {
     /**
-     * Print Postfix queue domain and age distribution.
+     * Discards the address verification cache.
      *
-     * @param PostfixQshapeRequest $request
+     * @param DiscardVerifyCacheRequest $request
      * @return Result
      */
-    public function qshape(PostfixQshapeRequest $request): Result
+    public function discardVerifyCache(DiscardVerifyCacheRequest $request): Result
     {
         try {
-            $response = $this->client->makeRequest(
-                endpoint: "/nodes/{$request->node}/postfix/qshape",
-                method: 'GET',
-                params: $request->toArray(),
+            $this->client->makeRequest(
+                endpoint: "/nodes/{$request->node}/postfix/discard_verify_cache",
+                method: 'POST',
             );
-
-            $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (Throwable $exception) {
             return new Result(
                 success: false,
@@ -34,16 +29,6 @@ class PostfixEndpoint extends Endpoint
             );
         }
 
-        $qshapeResults = collect();
-        foreach (Arr::get($data, 'data', []) as $resultData) {
-            $qshapeResults->push(new QshapeResult($resultData));
-        }
-
-        return new Result(
-            success: true,
-            data: [
-                'qshapeResults' => $qshapeResults,
-            ],
-        );
+        return new Result(success: true);
     }
 }
