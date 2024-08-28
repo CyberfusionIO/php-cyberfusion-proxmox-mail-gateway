@@ -1,14 +1,14 @@
 <?php
 
-namespace Cyberfusion\ProxmoxPVE\Models\Nodes;
+namespace Cyberfusion\ProxmoxMGW\Models\Nodes;
 
 class Task
 {
     /**
-     * @param string $upid Unique task ID.
+     * @param array $properties Task properties
      */
     public function __construct(
-        public string $upid,
+        public array $properties,
     ) {
     }
 }
