@@ -3,7 +3,9 @@
 namespace Cyberfusion\ProxmoxMGW\Endpoints\Config\RuleDB\Who;
 
 use Cyberfusion\ProxmoxMGW\Endpoints\Endpoint;
-use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Who\RegexCreateRequest;
+use Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\Who\Regex;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Who\RegexGetRequest;
+use Cyberfusion\ProxmoxMGW\Requests\Config\RuleDB\Who\RegexUpdateRequest;
 use Cyberfusion\ProxmoxMGW\Support\Result;
 use Illuminate\Support\Arr;
 use Throwable;
@@ -11,33 +13,55 @@ use Throwable;
 class RegexEndpoint extends Endpoint
 {
     /**
-     * Add 'Regular Expression' object.
+     * Read 'Regular Expression' object settings.
      *
-     * @param RegexCreateRequest $request
+     * @param RegexGetRequest $request
      * @return Result
      */
-    public function create(RegexCreateRequest $request): Result
+    public function get(RegexGetRequest $request): Result
     {
         try {
             $response = $this->client->makeRequest(
-                endpoint: sprintf('/config/ruledb/who/%d/regex', $request->ogroup),
-                method: 'POST',
-                params: $request->toArray(),
+                endpoint: sprintf('/config/ruledb/who/%d/regex/%d', $request->ogroup, $request->id),
+                method: 'GET',
             );
 
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (Throwable $exception) {
-            return new Result(
-                success: false,
-                message: $exception->getMessage(),
-            );
+            return new Result(success: false, message: $exception->getMessage());
         }
 
         return new Result(
             success: true,
             data: [
-                'id' => Arr::get($data, 'data'),
+                'regex' => new Regex(
+                    id: Arr::get($data, 'id'),
+                    regex: Arr::get($data, 'regex'),
+                ),
             ],
         );
+    }
+
+    /**
+     * Update 'Regular Expression' object.
+     *
+     * @param RegexUpdateRequest $request
+     * @return Result
+     */
+    public function update(RegexUpdateRequest $request): Result
+    {
+        try {
+            $this->client->makeRequest(
+                endpoint: sprintf('/config/ruledb/who/%d/regex/%d', $request->ogroup, $request->id),
+                method: 'PUT',
+                params: [
+                    'regex' => $request->regex,
+                ],
+            );
+        } catch (Throwable $exception) {
+            return new Result(success: false, message: $exception->getMessage());
+        }
+
+        return new Result(success: true);
     }
 }
