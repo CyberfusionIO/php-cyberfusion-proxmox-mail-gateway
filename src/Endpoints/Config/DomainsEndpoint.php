@@ -74,76 +74,76 @@ class DomainsEndpoint extends Endpoint
         return new Result(success: true);
     }
 
-		/**
-		 * Delete a relay domain.
-		 *
-		 * @param DomainDeleteRequest $request
-		 * @return Result
-		 */
-		public function delete(DomainDeleteRequest $request): Result
-		{
-				try {
-						$this->client->makeRequest(
-								endpoint: sprintf('/config/domains/%s', $request->domain),
-								method: 'DELETE',
-						);
-				} catch (Throwable $exception) {
-						return new Result(success: false, message: $exception->getMessage());
-				}
+    /**
+     * Delete a relay domain.
+     *
+     * @param DomainDeleteRequest $request
+     * @return Result
+     */
+    public function delete(DomainDeleteRequest $request): Result
+    {
+        try {
+            $this->client->makeRequest(
+                endpoint: sprintf('/config/domains/%s', $request->domain),
+                method: 'DELETE',
+            );
+        } catch (Throwable $exception) {
+            return new Result(success: false, message: $exception->getMessage());
+        }
 
-				return new Result(success: true);
-		}
+        return new Result(success: true);
+    }
 
-		/**
-		 * Read Domain data (comment).
-		 *
-		 * @param DomainGetRequest $request
-		 * @return Result
-		 */
-		public function get(DomainGetRequest $request): Result
-		{
-				try {
-						$response = $this->client->makeRequest(
-								endpoint: sprintf('/config/domains/%s', $request->domain),
-								method: 'GET',
-						);
+    /**
+     * Read Domain data (comment).
+     *
+     * @param DomainGetRequest $request
+     * @return Result
+     */
+    public function get(DomainGetRequest $request): Result
+    {
+        try {
+            $response = $this->client->makeRequest(
+                endpoint: sprintf('/config/domains/%s', $request->domain),
+                method: 'GET',
+            );
 
-						$data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-				} catch (Throwable $exception) {
-						return new Result(success: false, message: $exception->getMessage());
-				}
+            $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+        } catch (Throwable $exception) {
+            return new Result(success: false, message: $exception->getMessage());
+        }
 
-				return new Result(
-						success: true,
-						data: [
-								'domain' => new Domain(
-										domain: Arr::get($data, 'domain'),
-										comment: Arr::get($data, 'comment'),
-								),
-						],
-				);
-		}
+        return new Result(
+            success: true,
+            data: [
+                'domain' => new Domain(
+                    domain: Arr::get($data, 'domain'),
+                    comment: Arr::get($data, 'comment'),
+                ),
+            ],
+        );
+    }
 
-		/**
-		 * Update relay domain data (comment).
-		 *
-		 * @param DomainUpdateRequest $request
-		 * @return Result
-		 */
-		public function update(DomainUpdateRequest $request): Result
-		{
-				try {
-						$this->client->makeRequest(
-								endpoint: sprintf('/config/domains/%s', $request->domain),
-								method: 'PUT',
-								params: [
-										'comment' => $request->comment,
-								],
-						);
-				} catch (Throwable $exception) {
-						return new Result(success: false, message: $exception->getMessage());
-				}
+    /**
+     * Update relay domain data (comment).
+     *
+     * @param DomainUpdateRequest $request
+     * @return Result
+     */
+    public function update(DomainUpdateRequest $request): Result
+    {
+        try {
+            $this->client->makeRequest(
+                endpoint: sprintf('/config/domains/%s', $request->domain),
+                method: 'PUT',
+                params: [
+                    'comment' => $request->comment,
+                ],
+            );
+        } catch (Throwable $exception) {
+            return new Result(success: false, message: $exception->getMessage());
+        }
 
-				return new Result(success: true);
-		}
+        return new Result(success: true);
+    }
 }

@@ -2,8 +2,7 @@
 
 namespace Cyberfusion\ProxmoxMGW\Models\Nodes\PBS;
 
-class
-Snapshot
+class Snapshot
 {
     /**
      * @param string $backupId The backup ID.
