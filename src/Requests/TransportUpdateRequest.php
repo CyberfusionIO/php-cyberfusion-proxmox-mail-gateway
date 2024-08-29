@@ -25,7 +25,6 @@ class TransportUpdateRequest
     public function toArray(): array
     {
         return array_filter([
-            'domain' => $this->domain,
             'host' => $this->host,
             'comment' => $this->comment,
             'port' => $this->port,
