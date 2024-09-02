@@ -35,7 +35,7 @@ class QuarantineSpamEndpoint extends Endpoint
         }
 
         $spamMails = collect();
-        foreach ($data as $item) {
+        foreach ($data['data'] as $item) {
             $spamMails->push(new QuarantineSpamMail(
                 bytes: Arr::get($item, 'bytes'),
                 envelope_sender: Arr::get($item, 'envelope_sender'),
