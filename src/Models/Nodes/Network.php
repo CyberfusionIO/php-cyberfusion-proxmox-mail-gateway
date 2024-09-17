@@ -1,0 +1,36 @@
+<?php
+
+namespace Cyberfusion\ProxmoxPVE\Models\Nodes;
+
+class Network
+{
+    /**
+     * @param string $iface Network interface name.
+     * @param string $type Network interface type
+     * @param string|null $address IP address.
+     * @param string|null $netmask Network mask.
+     * @param string|null $gateway Default gateway address.
+     * @param bool|null $autostart Automatically start interface on boot.
+     * @param string|null $comments Comments
+     * @param int|null $mtu MTU.
+     * @param string|null $bondMode Bonding mode.
+     * @param string|null $bondPrimary Specify the primary interface for active-backup bond.
+     * @param string|null $bridgePorts Specify the interfaces you want to add to your bridge.
+     * @param bool|null $bridgeVlanAware Enable bridge vlan support.
+     */
+    public function __construct(
+        public string $iface,
+        public string $type,
+        public ?string $address = null,
+        public ?string $netmask = null,
+        public ?string $gateway = null,
+        public ?bool $autostart = null,
+        public ?string $comments = null,
+        public ?int $mtu = null,
+        public ?string $bondMode = null,
+        public ?string $bondPrimary = null,
+        public ?string $bridgePorts = null,
+        public ?bool $bridgeVlanAware = null,
+    ) {
+    }
+}

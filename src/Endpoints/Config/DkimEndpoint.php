@@ -18,13 +18,13 @@ class DkimEndpoint extends Endpoint
     {
         try {
             $response = $this
-                ->client
-                ->makeRequest(
-                    endpoint: '/config/dkim/domains',
-                    params: [
-                        'domain' => $request->domain,
-                    ],
-                );
+                    ->client
+                    ->makeRequest(
+                        endpoint: '/config/dkim/domains',
+                        params  : [
+                            'domain' => $request->domain,
+                        ],
+                    );
 
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (Throwable $exception) {
@@ -36,9 +36,9 @@ class DkimEndpoint extends Endpoint
 
         return new Result(
             success: true,
-            data: [
+            data   : [
                 'dkimDomainData' => new DkimDomainData(
-                    domain: Arr::get($data, 'data.domain'),
+                    domain : Arr::get($data, 'data.domain'),
                     comment: Arr::get($data, 'data.comment'),
                 ),
             ],
@@ -49,15 +49,15 @@ class DkimEndpoint extends Endpoint
     {
         try {
             $this
-                ->client
-                ->makeRequest(
-                    endpoint: '/config/dkim/domains',
-                    method: 'POST',
-                    params: [
-                        'domain' => $request->domain,
-                        'comment' => $request->comment,
-                    ],
-                );
+                    ->client
+                    ->makeRequest(
+                        endpoint: '/config/dkim/domains',
+                        method  : 'POST',
+                        params  : [
+                            'domain'  => $request->domain,
+                            'comment' => $request->comment,
+                        ],
+                    );
         } catch (Throwable $exception) {
             return new Result(
                 success: false,
@@ -72,15 +72,15 @@ class DkimEndpoint extends Endpoint
     {
         try {
             $this
-                ->client
-                ->makeRequest(
-                    endpoint: sprintf('/config/dkim/domains/%s', $request->domain),
-                    method: 'PUT',
-                    params: [
-                        'domain' => $request->domain,
-                        'comment' => $request->comment,
-                    ],
-                );
+                    ->client
+                    ->makeRequest(
+                        endpoint: sprintf('/config/dkim/domains/%s', $request->domain),
+                        method  : 'PUT',
+                        params  : [
+                            'domain'  => $request->domain,
+                            'comment' => $request->comment,
+                        ],
+                    );
         } catch (Throwable $exception) {
             return new Result(
                 success: false,
@@ -95,11 +95,11 @@ class DkimEndpoint extends Endpoint
     {
         try {
             $this
-                ->client
-                ->makeRequest(
-                    endpoint: sprintf('/config/dkim/domains/%s', $request->domain),
-                    method: 'DELETE',
-                );
+                    ->client
+                    ->makeRequest(
+                        endpoint: sprintf('/config/dkim/domains/%s', $request->domain),
+                        method  : 'DELETE',
+                    );
         } catch (Throwable $exception) {
             return new Result(
                 success: false,

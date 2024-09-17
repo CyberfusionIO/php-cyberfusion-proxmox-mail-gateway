@@ -15,16 +15,16 @@ class TicketEndpoint extends Endpoint
     {
         try {
             $response = $this
-                ->client
-                ->makeRequest(
-                    endpoint: '/access/ticket',
-                    method: 'POST',
-                    params: [
-                        'username' => $request->username,
-                        'password' => $request->password,
-                        'realm' => $request->realm,
-                    ],
-                );
+                    ->client
+                    ->makeRequest(
+                        endpoint: '/access/ticket',
+                        method  : 'POST',
+                        params  : [
+                            'username' => $request->username,
+                            'password' => $request->password,
+                            'realm'    => $request->realm,
+                        ],
+                    );
 
             $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (Throwable $exception) {
@@ -36,12 +36,12 @@ class TicketEndpoint extends Endpoint
 
         return new Result(
             success: true,
-            data: [
+            data   : [
                 'authenticationTicket' => new AuthenticationTicket(
                     username: Arr::get($data, 'data.username'),
-                    ticket: Arr::get($data, 'data.ticket'),
-                    role: Arr::get($data, 'data.role'),
-                    csrf: Arr::get($data, 'data.CSRFPreventionToken'),
+                    ticket  : Arr::get($data, 'data.ticket'),
+                    role    : Arr::get($data, 'data.role'),
+                    csrf    : Arr::get($data, 'data.CSRFPreventionToken'),
                 ),
             ],
         );

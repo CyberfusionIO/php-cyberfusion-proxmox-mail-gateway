@@ -1,0 +1,24 @@
+<?php
+
+namespace Cyberfusion\ProxmoxMGW\Models\Config\RuleDB\Action;
+
+class Disclaimer
+{
+    /**
+     * @param string $id Action Object ID.
+     * @param bool|null $addSeparator If set to 1, adds a '--' separator between the disclaimer and the content. Set to 0 to prevent that.
+     * @param string|null $disclaimer The Disclaimer
+     * @param string|null $info Informational comment.
+     * @param string|null $name Action name.
+     * @param string|null $position Put the disclaimer at the specified position.
+     */
+    public function __construct(
+        public string $id,
+        public ?bool $addSeparator = null,
+        public ?string $disclaimer = null,
+        public ?string $info = null,
+        public ?string $name = null,
+        public ?string $position = null,
+    ) {
+    }
+}
