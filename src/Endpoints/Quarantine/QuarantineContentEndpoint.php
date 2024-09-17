@@ -40,7 +40,7 @@ class QuarantineContentEndpoint extends Endpoint
             );
         }
 
-				$data = $data['data'];
+        $data = $data['data'];
 
         $quarantineContent = new QuarantineContent(
             bytes: Arr::get($data, 'bytes'),

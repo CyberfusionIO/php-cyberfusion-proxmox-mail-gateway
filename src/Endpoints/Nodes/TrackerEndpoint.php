@@ -27,7 +27,7 @@ class TrackerEndpoint extends Endpoint
                 params: $request->toArray(),
             );
 
-            $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+            $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR)['data'];
         } catch (Throwable $exception) {
             return new Result(
                 success: false,
@@ -37,7 +37,7 @@ class TrackerEndpoint extends Endpoint
 
         $mails = collect();
         foreach ($data as $mail) {
-            $mails->push(new Mail($mail));
+            $mails->push(new Mail($mail['client'] ?? null, $mail['dstatus'], $mail['from'], $mail['id'], $mail['msgid'] ?? null, $mail['qid'] ?? null, $mail['relay'] ?? null, $mail['rstatus'] ?? null, $mail['size'] ?? null, $mail['time'], $mail['to']));
         }
 
         return new Result(
