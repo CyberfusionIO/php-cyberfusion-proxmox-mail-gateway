@@ -1,5 +1,5 @@
 {
-    "name": "cyberfusion/proxmox-mail-gateway",
+    "name": "ljpc/proxmox-mail-gateway",
     "description": "Library for Proxmox Mail Gateway.",
     "type": "library",
     "license": "MIT",
