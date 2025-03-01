@@ -22,7 +22,7 @@ class Client
     public function __construct(
         private readonly string $hostname,
         private readonly int $port = 8006,
-        private readonly string $userAgent = 'Cyberfusion-PMG-PHP/2.0',
+        private readonly string $userAgent = 'Cyberfusion-PMG-PHP/2.1',
     ) {
         $this->httpClient = new HttpClient([
             'connect_timeout' => 5,
