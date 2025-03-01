@@ -14,12 +14,12 @@
         "ext-json": "*",
         "lib-curl": "*",
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/support": "^10.0|^11.0"
+        "illuminate/support": "^11.0|^12.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.4",
-        "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^10.1|^11.0",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.0|^12.0",
         "symplify/easy-coding-standard": "^12.0"
     },
     "config": {
